@@ -129,7 +129,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.gesture"
+        applicationId "com.front_rn"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
@@ -181,7 +181,6 @@ android {
 }
 
 dependencies {
-     implementation project(':react-native-vector-icons')
     implementation fileTree(dir: "libs", include: ["*.jar"])
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules

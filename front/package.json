@@ -1,5 +1,5 @@
 {
-  "name": "gesture",
+  "name": "wellwork",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -10,6 +10,7 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@emotion/react": "^11.1.5",
     "@react-native-community/masked-view": "^0.1.10",
     "@react-navigation/bottom-tabs": "^5.11.7",
     "@react-navigation/drawer": "^5.12.3",
@@ -21,11 +22,14 @@
     "react-native-reanimated": "^1.13.2",
     "react-native-safe-area-context": "^3.1.9",
     "react-native-screens": "^2.17.1",
+    "react-native-stopwatch-timer": "0.0.21",
     "react-native-vector-icons": "^8.0.0"
   },
   "devDependencies": {
     "@babel/core": "7.12.13",
     "@babel/runtime": "7.12.13",
+    "@emotion/babel-plugin": "^11.1.2",
+    "@emotion/native": "^11.0.0",
     "@react-native-community/eslint-config": "1.1.0",
     "babel-jest": "25.5.1",
     "eslint": "6.8.0",
