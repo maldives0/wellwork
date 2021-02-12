@@ -1,17 +1,12 @@
 import React, {useState} from 'react';
-import {
-  SafeAreaView,
-  View,
-  Text,
-  Image,
-  Button,
-  StyleSheet,
-} from 'react-native';
-import {Stopwatch, Timer} from 'react-native-stopwatch-timer';
+import {SafeAreaView, View, Text, StyleSheet} from 'react-native';
+import {Stopwatch} from 'react-native-stopwatch-timer';
 import BasicButton from '../Shared/BasicButton';
 const TabWorkScreen = ({navigation, route}) => {
   const [isStopwatchStart, setIsStopwatchStart] = useState(false);
   const [resetStopwatch, setResetStopwatch] = useState(false);
+  const [isSignIn, setIsSignIn] = useState(false);
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
@@ -33,8 +28,9 @@ const TabWorkScreen = ({navigation, route}) => {
           onPress={() => {
             setIsStopwatchStart(true);
             setResetStopwatch(false);
+            setIsSignIn(true);
           }}>
-          <Text style={styles.buttonText}>
+          <Text>
             <Text style={styles.buttonText}>출근하기</Text>
           </Text>
         </BasicButton>
@@ -42,27 +38,30 @@ const TabWorkScreen = ({navigation, route}) => {
           onPress={() => {
             setIsStopwatchStart(false);
             setResetStopwatch(true);
+            setIsSignIn(false);
           }}>
           <Text style={styles.buttonText}>퇴근하기</Text>
         </BasicButton>
 
-        {!isStopwatchStart ? (
-          <BasicButton
-            onPress={() => {
-              setIsStopwatchStart(!isStopwatchStart);
-              setResetStopwatch(false);
-            }}>
-            <Text style={styles.buttonText}>돌아오기</Text>
-          </BasicButton>
-        ) : (
-          <BasicButton
-            onPress={() => {
-              setIsStopwatchStart(!isStopwatchStart);
-              setResetStopwatch(false);
-            }}>
-            <Text style={styles.buttonText}>자리비우기</Text>
-          </BasicButton>
-        )}
+        {isSignIn ? (
+          !isStopwatchStart ? (
+            <BasicButton
+              onPress={() => {
+                setIsStopwatchStart(!isStopwatchStart);
+                setResetStopwatch(false);
+              }}>
+              <Text style={styles.buttonText}>돌아오기</Text>
+            </BasicButton>
+          ) : (
+            <BasicButton
+              onPress={() => {
+                setIsStopwatchStart(!isStopwatchStart);
+                setResetStopwatch(false);
+              }}>
+              <Text style={styles.buttonText}>자리비우기</Text>
+            </BasicButton>
+          )
+        ) : null}
       </View>
     </SafeAreaView>
   );
@@ -80,13 +79,8 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     padding: 20,
   },
-  sectionStyle: {
-    flex: 1,
-    marginTop: 32,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
   buttonText: {
+    textAlign: 'center',
     fontSize: 20,
     color: '#fff',
   },

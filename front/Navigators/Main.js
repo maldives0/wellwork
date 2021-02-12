@@ -1,19 +1,11 @@
 import React from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  StatusBar,
-  TouchableOpacity,
-} from 'react-native';
 
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import TabWorkScreen from './TabWorkScreen';
 import TabUserScreen from './TabUserScreen';
+import TabApplyScreen from './TabApplyScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -23,6 +15,8 @@ const TabBarIcon = (focused, name) => {
     iconName = 'dashboard';
   } else if (name === 'TabUserScreen') {
     iconName = 'user';
+  } else if (name === 'TabApplyScreen') {
+    iconName = 'calendar';
   }
   iconSize = focused ? 30 : 20;
   iconColor = focused ? '#348F50' : 'gray';
@@ -43,6 +37,7 @@ const Main = () => {
       }}>
       <Tab.Screen name="TabWorkScreen" component={TabWorkScreen} />
       <Tab.Screen name="TabUserScreen" component={TabUserScreen} />
+      <Tab.Screen name="TabApplyScreen" component={TabApplyScreen} />
     </Tab.Navigator>
   );
 };
