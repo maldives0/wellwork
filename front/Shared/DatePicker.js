@@ -27,15 +27,15 @@ const DISPLAY_VALUES = Platform.select({
 const Calender = () => {
   moment.locale('ko');
   const [date, setDate] = useState(new Date());
-  const [date2, setDate2] = useState(new Date());
+
   const [mode, setMode] = useState(MODE_VALUES[0]);
   const [show, setShow] = useState(false);
-  const [color, setColor] = useState();
-  const [display, setDisplay] = useState(DISPLAY_VALUES[0]);
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
+
     setShow(Platform.OS === 'ios');
+
     setDate(currentDate);
   };
 
@@ -55,7 +55,6 @@ const Calender = () => {
     <View>
       <View>
         <TouchableOpacity
-          style={styles.buttonLayout}
           onPress={() => {
             showDatepicker();
           }}>
@@ -66,7 +65,6 @@ const Calender = () => {
       <View style={styles.header}></View>
       {show && (
         <DateTimePicker
-          // testID="dateTimePicker"
           timeZoneOffsetInMinutes={0}
           value={date}
           mode={mode}

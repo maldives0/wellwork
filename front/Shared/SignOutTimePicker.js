@@ -1,11 +1,10 @@
 //ios 설정을 하지 않아 후에 설정 필요함 https://github.com/react-native-datetimepicker/datetimepicker
 import {TouchableOpacity, StyleSheet, View, Text, Platform} from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
-
-import React, {useState} from 'react';
-
+import React, {useState, useEffect} from 'react';
 import moment from 'moment';
 import 'moment/locale/ko';
+import 'moment-timezone';
 import {
   ANDROID_MODE,
   IOS_MODE,
@@ -24,19 +23,28 @@ const DISPLAY_VALUES = Platform.select({
   windows: [],
 });
 
-const TimePicker = (props) => {
+const SignOutTimePicker = (props) => {
   moment.locale('ko');
-  const [date, setDate] = useState(new Date());
-  const [date2, setDate2] = useState(new Date());
+  moment.tz.setDefault('Asia/Seoul');
+  let signOutTime = props.signOutTime;
+  let isSignIn = props.isSignIn;
+  const [endWorkTime, setEndWorkTime] = useState(signOutTime);
   const [mode, setMode] = useState(MODE_VALUES[0]);
   const [show, setShow] = useState(false);
-  const [color, setColor] = useState();
-  const [display, setDisplay] = useState(DISPLAY_VALUES[0]);
+  // console.log(
+  //   '퇴근::',
+  //   moment(signOutTime.getTime()).utc(signOutTime).format('LTS'),
+  // );
+  useEffect(() => {
+    if (signOutTime) {
+      setEndWorkTime(props.signOutTime);
+    }
+  }, [signOutTime]);
 
   const onChange = (event, selectedDate) => {
-    const currentDate = selectedDate || date;
+    const currentDate = selectedDate || endWorkTime;
     setShow(Platform.OS === 'ios');
-    setDate(currentDate);
+    setEndWorkTime(currentDate);
   };
 
   const showMode = (currentMode) => {
@@ -48,7 +56,10 @@ const TimePicker = (props) => {
   };
 
   const showTimepicker = () => {
-    showMode('time');
+    if (endWorkTime !== undefined) {
+      showMode('time');
+      // Use the hour and minute from the date object
+    }
   };
 
   return (
@@ -62,19 +73,20 @@ const TimePicker = (props) => {
           <Text style={styles.buttonText}>
             ({props.type}){'\n'}
             <Text style={styles.dateTimeText}>
-              {moment.utc(date).format('LT')}
+              {moment(
+                isSignIn
+                  ? endWorkTime.getTime() + 9 * 60 * 60 * 1000
+                  : endWorkTime.getTime(),
+              )
+                .utc(endWorkTime)
+                .format('LT')}
             </Text>
           </Text>
         </TouchableOpacity>
       </View>
 
       {show && (
-        <DateTimePicker
-          timeZoneOffsetInMinutes={0}
-          value={date}
-          mode={mode}
-          onChange={onChange}
-        />
+        <DateTimePicker value={endWorkTime} mode={mode} onChange={onChange} />
       )}
     </View>
   );
@@ -109,4 +121,4 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
 });
-export default TimePicker;
+export default SignOutTimePicker;

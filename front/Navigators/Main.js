@@ -1,6 +1,9 @@
 import React from 'react';
 
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {
+  createBottomTabNavigator,
+  useBottomTabBarHeight,
+} from '@react-navigation/bottom-tabs';
 
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import TabWorkScreen from './TabWorkScreen';
@@ -18,7 +21,7 @@ const TabBarIcon = (focused, name) => {
   } else if (name === 'TabApplyScreen') {
     iconName = 'calendar';
   }
-  iconSize = focused ? 30 : 20;
+  iconSize = focused ? 45 : 35;
   iconColor = focused ? '#348F50' : 'gray';
   return <AntDesign size={iconSize} name={iconName} color={iconColor} />;
 };
@@ -34,6 +37,7 @@ const Main = () => {
         showLabel: false,
         activeTintColor: '#348F50',
         inactiveTintColor: 'gray',
+        style: {height: 80},
       }}>
       <Tab.Screen name="TabWorkScreen" component={TabWorkScreen} />
       <Tab.Screen name="TabUserScreen" component={TabUserScreen} />
