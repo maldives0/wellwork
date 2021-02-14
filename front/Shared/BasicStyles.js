@@ -1,4 +1,4 @@
-import styled from '@emotion/native';
+import styled, {css} from '@emotion/native';
 
 export const BasicButton = styled.TouchableOpacity`
   flex-direction: row;
@@ -19,3 +19,43 @@ export const BorderButton = styled.TouchableOpacity`
   padding: 15px;
   margin: 10px;
 `;
+
+// export const applyColorType = styled.View`
+//   border-radius: 100%;
+//   width: 10px;
+//   height: 10px;
+//   padding: 10px;
+
+//   ${(props) =>
+//     props.vacation &&
+//     css`
+//       background: orange;
+//     `}
+
+//   ${(props) =>
+//     props.sickLeave &&
+//     css`
+//       background: blue;
+//     `}
+
+//   ${(props) =>
+//     props.workout &&
+//     css`
+//       background: pink;
+//     `}
+//   ${(props) =>
+//     props.halfWorkout &&
+//     css`
+//       background: skyblue;
+//     `}
+//   ${(props) =>
+//     props.reserveTraining &&
+//     css`
+//       background: yellowgreen;
+//     `}
+//   ${(props) =>
+//     props.etc &&
+//     css`
+//       background: violet;
+//     `}
+// `;

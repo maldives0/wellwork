@@ -8,7 +8,7 @@ import {
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import TabWorkScreen from './TabWorkScreen';
 import TabUserScreen from './TabUserScreen';
-import TabApplyScreen from './TabApplyScreen';
+import StackApplyScreen from './StackApplyScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -18,7 +18,7 @@ const TabBarIcon = (focused, name) => {
     iconName = 'dashboard';
   } else if (name === 'TabUserScreen') {
     iconName = 'user';
-  } else if (name === 'TabApplyScreen') {
+  } else if (name === 'StackApplyScreen') {
     iconName = 'calendar';
   }
   iconSize = focused ? 45 : 35;
@@ -41,7 +41,7 @@ const Main = () => {
       }}>
       <Tab.Screen name="TabWorkScreen" component={TabWorkScreen} />
       <Tab.Screen name="TabUserScreen" component={TabUserScreen} />
-      <Tab.Screen name="TabApplyScreen" component={TabApplyScreen} />
+      <Tab.Screen name="StackApplyScreen" component={StackApplyScreen} />
     </Tab.Navigator>
   );
 };

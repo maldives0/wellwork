@@ -1,43 +1,31 @@
 import React, {useState} from 'react';
 import {Alert, Modal, StyleSheet, Text, Pressable, View} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 import {BasicButton, BorderButton} from './BasicStyles';
-const ApplyModal = () => {
+const ApplyModal = ({screenName}) => {
+  const navigation = useNavigation();
   const [modalVisible, setModalVisible] = useState(false);
+  const ApplyType = ['연차', '반차', '출장', '병가', '예비군', '기타'];
   return (
     <View style={styles.centeredView}>
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-          Alert.alert('Modal has been closed.');
-          setModalVisible(!modalVisible);
-        }}>
+      <Modal animationType="slide" transparent={true} visible={modalVisible}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
             <View style={styles.buttonRowLayout}>
-              <BorderButton onPress={() => {}}>
-                <Text style={styles.buttonText}>연차</Text>
-              </BorderButton>
-              <BorderButton onPress={() => {}}>
-                <Text style={styles.buttonText}>출장</Text>
-              </BorderButton>
-            </View>
-            <View style={styles.buttonRowLayout}>
-              <BorderButton onPress={() => {}}>
-                <Text style={styles.buttonText}>반차</Text>
-              </BorderButton>
-              <BorderButton onPress={() => {}}>
-                <Text style={styles.buttonText}>병가</Text>
-              </BorderButton>
-            </View>
-            <View style={styles.buttonRowLayout}>
-              <BorderButton onPress={() => {}}>
-                <Text style={styles.buttonText}>예비군</Text>
-              </BorderButton>
-              <BorderButton onPress={() => {}}>
-                <Text style={styles.buttonText}>기타</Text>
-              </BorderButton>
+              {ApplyType.map((type, i) => {
+                return (
+                  <BorderButton
+                    key={type + i}
+                    onPress={() => {
+                      navigation.navigate(screenName, {
+                        type,
+                      });
+                      setModalVisible(!modalVisible);
+                    }}>
+                    <Text style={styles.buttonText}>{type}</Text>
+                  </BorderButton>
+                );
+              })}
             </View>
             <Pressable
               style={[styles.button, styles.buttonClose]}
@@ -100,6 +88,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
+    flexWrap: 'wrap',
   },
   buttonText: {
     fontSize: 20,
