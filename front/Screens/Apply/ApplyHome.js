@@ -5,8 +5,7 @@ import {
   ScrollView,
   StyleSheet,
   SafeAreaView,
-  Modal,
-  Button,
+
 } from 'react-native';
 
 import WorkCalendar from '../../Shared/WorkCalendar';
@@ -15,9 +14,7 @@ import ApplyModal from '../../Shared/ApplyModal';
 const ApplyHome = ({navigation, route}) => {
   const [nickname, setNickname] = useState('momo');
   const [annualLeave, setAnnualLeave] = useState(12);
-  const [startDay, setStartDay] = useState('');
-  const [endDay, setEndDay] = useState('');
-  const [modalVisible, setModalVisible] = useState(false);
+  
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.scrollView}>
@@ -26,9 +23,11 @@ const ApplyHome = ({navigation, route}) => {
             현재 {nickname}님이 사용할 수 있는{'\n'}
             연차일은 <Text style={{fontSize: 30}}>{annualLeave}</Text>일 입니다.
           </Text>
+          <ApplyModal screenName="ApplyForm" />
         </View>
-        <ApplyModal screenName="ApplyForm" />
+        <View style={styles.iosOnly}>      
         <WorkCalendar />
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
@@ -42,10 +41,13 @@ const styles = StyleSheet.create({
   scrollView: {
     marginTop: 20,
   },
+  iosOnly:{
+    paddingTop: (Platform.OS === 'ios') && 36
+  },
   viewText: {
-    textAlign: 'center',
-    fontSize: 15,
-    marginTop: 10,
+fontSize: (Platform.OS === 'ios') ? 20 : 15,
+textAlign: 'center',
+marginTop: 10,
   },
 });
 export default ApplyHome;

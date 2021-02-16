@@ -2,12 +2,12 @@ import React from 'react';
 
 import {
   createBottomTabNavigator,
-  useBottomTabBarHeight,
+
 } from '@react-navigation/bottom-tabs';
 
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import TabWorkScreen from './TabWorkScreen';
-import TabUserScreen from './TabUserScreen';
+import StackUserScreen from './StackUserScreen';
 import StackApplyScreen from './StackApplyScreen';
 
 const Tab = createBottomTabNavigator();
@@ -16,7 +16,7 @@ const TabBarIcon = (focused, name) => {
   let iconName, iconSize, iconColor;
   if (name === 'TabWorkScreen') {
     iconName = 'dashboard';
-  } else if (name === 'TabUserScreen') {
+  } else if (name === 'StackUserScreen') {
     iconName = 'user';
   } else if (name === 'StackApplyScreen') {
     iconName = 'calendar';
@@ -40,7 +40,7 @@ const Main = () => {
         style: {height: 80},
       }}>
       <Tab.Screen name="TabWorkScreen" component={TabWorkScreen} />
-      <Tab.Screen name="TabUserScreen" component={TabUserScreen} />
+      <Tab.Screen name="StackUserScreen" component={StackUserScreen} />
       <Tab.Screen name="StackApplyScreen" component={StackApplyScreen} />
     </Tab.Navigator>
   );

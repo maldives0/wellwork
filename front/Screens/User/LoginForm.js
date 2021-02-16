@@ -3,24 +3,24 @@ import {
   StyleSheet,
   SafeAreaView,
   ScrollView,
-    Text,
-    Platform,
+  Button,
+  Text,
   View,
 } from 'react-native';
 import ApplyCalendarPicker from '../../Shared/ApplyCalendarPicker';
 
-function ApplyForm({route, navigation}) {
-  const type = route.params.type;
-  let str = JSON.stringify(type);
+function LoginForm({route, navigation}) {
+
+
 
   return (
     <SafeAreaView>
       <ScrollView style={styles.scrollView}>
         <View style={styles.container}>
           <Text style={styles.title}>
-            신청유형: {str.substring(1, str.length - 1)}
+          login
           </Text>
-          <ApplyCalendarPicker />
+          
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -37,11 +37,9 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 20,
+
     marginBottom: 10,
-  },
-  iosOnly:{
-    paddingTop: (Platform.OS === 'ios') && 36
   },
 });
 
-export default ApplyForm;
+export default LoginForm;

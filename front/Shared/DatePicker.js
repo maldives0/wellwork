@@ -1,79 +1,53 @@
 //ios 설정을 하지 않아 후에 설정 필요함 https://github.com/react-native-datetimepicker/datetimepicker
 import {TouchableOpacity, StyleSheet, View, Text, Platform} from 'react-native';
-import DateTimePicker from '@react-native-community/datetimepicker';
-
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 import React, {useState} from 'react';
 
 import moment from 'moment';
 import 'moment/locale/ko';
-import {
-  ANDROID_MODE,
-  IOS_MODE,
-  ANDROID_DISPLAY,
-  IOS_DISPLAY,
-} from '../Redux/constants';
 
-const MODE_VALUES = Platform.select({
-  ios: Object.values(IOS_MODE),
-  android: Object.values(ANDROID_MODE),
-  windows: [],
-});
-const DISPLAY_VALUES = Platform.select({
-  ios: Object.values(IOS_DISPLAY),
-  android: Object.values(ANDROID_DISPLAY),
-  windows: [],
-});
 
 const Calender = () => {
-  moment.locale('ko');
+  // moment.locale('ko');
   const [date, setDate] = useState(new Date());
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+ 
+  const showDatePicker = () => {
+    setDatePickerVisibility(true);
+  };
 
-  const [mode, setMode] = useState(MODE_VALUES[0]);
-  const [show, setShow] = useState(false);
+  const hideDatePicker = () => {
+    setDatePickerVisibility(false);
+  };
 
-  const onChange = (event, selectedDate) => {
+  const handleConfirm = (selectedDate) => {
+    // console.warn("A date has been picked: ", selectedDate);
     const currentDate = selectedDate || date;
-
-    setShow(Platform.OS === 'ios');
-
     setDate(currentDate);
+    hideDatePicker();
   };
-
-  const showMode = (currentMode) => {
-    setShow(true);
-    setMode(currentMode);
-  };
-  const showDatepicker = () => {
-    showMode('date');
-  };
-
-  const showTimepicker = () => {
-    showMode('time');
-  };
-
   return (
     <View>
-      <View>
+     <View style={styles.iosLayout}>
         <TouchableOpacity
           onPress={() => {
-            showDatepicker();
+            showDatePicker();
           }}>
           <Text style={styles.buttonText}>{moment.utc(date).format('LL')}</Text>
         </TouchableOpacity>
+          
+      <DateTimePickerModal
+        isVisible={isDatePickerVisible}
+        mode="date"
+        onConfirm={handleConfirm}
+        onCancel={hideDatePicker}
+      />       
       </View>
-
-      <View style={styles.header}></View>
-      {show && (
-        <DateTimePicker
-          timeZoneOffsetInMinutes={0}
-          value={date}
-          mode={mode}
-          onChange={onChange}
-        />
-      )}
     </View>
   );
 };
+
+
 
 const styles = StyleSheet.create({
   container: {
@@ -103,5 +77,8 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginBottom: 20,
   },
+  iosLayout:{
+    padding:36    
+      },
 });
 export default Calender;

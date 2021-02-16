@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {SafeAreaView, View, Text, StyleSheet} from 'react-native';
+import {SafeAreaView, View, Text, StyleSheet, Platform} from 'react-native';
 import {Stopwatch} from 'react-native-stopwatch-timer';
 import {BasicButton} from '../Shared/BasicStyles';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -16,6 +16,7 @@ const TabWorkScreen = ({navigation, route}) => {
   const [isStopwatchStart, setIsStopwatchStart] = useState(false);
   const [resetStopwatch, setResetStopwatch] = useState(false);
   const [isSignIn, setIsSignIn] = useState(false);
+  const [isWorking, setIsWorking] = useState(true);
 
   const [signInTime, setSignInTime] = useState(new Date());
   const [signOutTime, setSignOutTime] = useState(new Date());
@@ -35,7 +36,7 @@ const TabWorkScreen = ({navigation, route}) => {
             signInTime={signInTime}
           />
           <AntDesign size={25} name="arrowright" color="#348F50" />
-          <SignOutTimePicker type="퇴근시간" signOutTime={signOutTime} />
+          <SignOutTimePicker type="퇴근시간" isWorking={isWorking} signOutTime={signOutTime} />
         </View>
         <View style={styles.viewLayout}>
           <Text style={styles.title}>현재 근무시간</Text>
@@ -57,6 +58,7 @@ const TabWorkScreen = ({navigation, route}) => {
               setIsStopwatchStart(true);
               setResetStopwatch(false);
               setIsSignIn(true);
+              setIsWorking(true);
               setSignInTime(nowTime);
             }}>
             <Text>
@@ -68,6 +70,7 @@ const TabWorkScreen = ({navigation, route}) => {
               setIsStopwatchStart(false);
               setResetStopwatch(true);
               setIsSignIn(false);
+              setIsWorking(false)
               setSignOutTime(nowTime);
             }}>
             <Text style={styles.buttonText}>퇴근하기</Text>
@@ -97,6 +100,7 @@ const TabWorkScreen = ({navigation, route}) => {
     </SafeAreaView>
   );
 };
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -104,13 +108,21 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   datePickerLayout: {
-    marginBottom: 36,
+  ...Platform.select({
+    ios:{
+      paddingTop: 6,
+    },
+    android:{
+      marginBottom:36,
+      padding: 16,
+    }
+  }),  
     alignItems: 'center',
     justifyContent: 'center',
     borderColor: '#348F50',
     borderStyle: 'solid',
     borderTopWidth: 1,
-    padding: 16,
+    
   },
   timePickerLayout: {
     flexDirection: 'row',

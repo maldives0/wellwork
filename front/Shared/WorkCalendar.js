@@ -63,14 +63,6 @@ const WorkCalendar = () => {
     console.log('selected day', day);
   };
 
-  // const onDayPress = useCallback(
-  //   (day) => {
-  //     console.log('selected day', day);
-  //     setSelected(day.dateString);
-  //   },
-  //   [day],
-  // );
-
   return (
     <SafeAreaView>
       <View style={styles.header}>
@@ -116,9 +108,10 @@ const WorkCalendar = () => {
         />
       </View>
       <View style={styles.applyColorInfo}>
-        {applyType.map((t) => {
+        {applyType.map((t,i) => {
           return (
             <View
+            key={t+i}
               style={{
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -159,10 +152,9 @@ const styles = StyleSheet.create({
   applyColorInfo: {
     flex: 1,
     flexDirection: 'row',
-    // flexWrap: 'wrap',
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 10,
+    marginTop: (Platform.OS === 'ios') ? 30:10,
   },
   infoText: {
     margin: 5,
