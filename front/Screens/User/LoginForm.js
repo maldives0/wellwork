@@ -1,28 +1,45 @@
+import axios from 'axios';
 import React, {useState, useCallback} from 'react';
 import {
   StyleSheet,
   SafeAreaView,
-  ScrollView,
-  Button,
-  Text,
-  View,
+   View,
 } from 'react-native';
-import ApplyCalendarPicker from '../../Shared/ApplyCalendarPicker';
+import {FormLabel, FormInput, Button} from 'react-native-elements';
+import axios from 'axios';
+import firbase from 'firbase';
 
 function LoginForm({route, navigation}) {
-
-
-
+const[phoneNum, setPhoneNum] = useState('');
+const[code, setCode] = useState('');
+const onSubmit = useCallback(async()=>{
+try{
+let {data} = await axios.post(`${Root_URL}/verifyOneTimePassword`,{
+phone :  phoneNum, code: code
+});
+firbase.auth().signInWithCustomToken(data.token);
+}
+catch(err){
+console.error(err);
+}
+},[]);
   return (
-    <SafeAreaView>
-      <ScrollView style={styles.scrollView}>
-        <View style={styles.container}>
-          <Text style={styles.title}>
-          login
-          </Text>
-          
+    <SafeAreaView style={styles.container}>
+      <View >
+        <FormLabel>휴대전화번호:</FormLabel>
+         <FormInput 
+         value={phoneNum}
+         onChangeText={phone=>setPhoneNum(phone)}
+         />          
         </View>
-      </ScrollView>
+      <View >
+        <FormLabel>확인코드:</FormLabel>
+         <FormInput 
+         value={code}
+         onChangeText={code=>setCode(code)}
+         />          
+        </View>
+        <Button onPress={} title="확인하기" />
     </SafeAreaView>
   );
 }
