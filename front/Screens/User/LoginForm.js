@@ -1,61 +1,80 @@
-import axios from 'axios';
 import React, {useState, useCallback} from 'react';
-import {
-  StyleSheet,
-  SafeAreaView,
-   View,
-} from 'react-native';
-import {FormLabel, FormInput, Button} from 'react-native-elements';
+import {StyleSheet, SafeAreaView, View, Text} from 'react-native';
+import {Input, Button} from 'react-native-elements';
 import axios from 'axios';
-import firbase from 'firbase';
-
+import firebase from 'firebase';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import GoToButton from '../../test/GoToButton';
+import {BasicButton} from '../../Shared/BasicStyles';
 function LoginForm({route, navigation}) {
-const[phoneNum, setPhoneNum] = useState('');
-const[code, setCode] = useState('');
-const onSubmit = useCallback(async()=>{
-try{
-let {data} = await axios.post(`${Root_URL}/verifyOneTimePassword`,{
-phone :  phoneNum, code: code
-});
-firbase.auth().signInWithCustomToken(data.token);
-}
-catch(err){
-console.error(err);
-}
-},[]);
+  const [phone, setPhone] = useState('');
+  const [code, setCode] = useState('');
+  const [phoneErrorMessage, setPhoneErrorMessage] = useState('');
+  const [codeErrorMessage, setCodeErrorMessage] = useState('');
+
+  const onSubmitPhone = useCallback(async () => {
+    try {
+      if (!phoneErrorMessage) {
+        setPhoneErrorMessage('전화번호를 확인해주세요.');
+      }
+      // await axios.post(`${Root_URL}/createUser`,{
+      // phone :  phone, code: code
+      // });
+      // await axios.post(`${Root_URL}/requestOneTimePassword`,{
+      // phone :  phone, code: code
+      // });
+    } catch (err) {
+      console.error(err);
+    }
+  }, []);
+  const onSubmitCode = useCallback(async () => {
+    try {
+      if (!codeErrorMessage) {
+        setCodeErrorMessage('확인코드를 확인해주세요.');
+      }
+
+      // let {data} = await axios.post(`${Root_URL}/verifyOneTimePassword`,{
+      // phone :  phone, code: code
+      // });
+      // firbase.auth().signInWithCustomToken(data.token);
+    } catch (err) {
+      console.error(err);
+    }
+  }, []);
+
   return (
     <SafeAreaView style={styles.container}>
-      <View >
-        <FormLabel>휴대전화번호:</FormLabel>
-         <FormInput 
-         value={phoneNum}
-         onChangeText={phone=>setPhoneNum(phone)}
-         />          
-        </View>
-      <View >
-        <FormLabel>확인코드:</FormLabel>
-         <FormInput 
-         value={code}
-         onChangeText={code=>setCode(code)}
-         />          
-        </View>
-        <Button onPress={} title="확인하기" />
+      <GoToButton screenName="휴대번호 로그인" />
+
+      <Text>kakao로 로그인하기</Text>
     </SafeAreaView>
   );
 }
 const styles = StyleSheet.create({
   container: {
+    margin: 16,
     flex: 1,
-    alignItems: 'center',
+    alignContent: 'center',
     justifyContent: 'center',
   },
-  scrollView: {
-    marginTop: 10,
-  },
-  title: {
+  inputLayout: {
+    padding: 10,
     fontSize: 20,
+  },
+  formLayout: {
+    justifyContent: 'center',
 
-    marginBottom: 10,
+    flexDirection: 'row',
+    marginBottom: 6,
+  },
+  buttonAreaLayout: {
+    fontSize: 20,
+    flexDirection: 'row-reverse',
+    marginBottom: 26,
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 20,
   },
 });
 
