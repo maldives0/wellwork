@@ -1,8 +1,8 @@
-import {combineReducers} from 'redux';
-import userSlice = require('./userSlice');
-import workSlice = require('./workSlice');
+const { combineReducers } = require("redux");
+const userSlice = require("./userSlice");
+const workSlice = require("./workSlice");
 
-export default combineReducers({
-user: userSlice.reducer,
-work: workSlice.reducer,
-})
+module.exports = combineReducers({
+  user: userSlice.reducer,
+  work: workSlice.reducer,
+});

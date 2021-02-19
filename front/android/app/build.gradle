@@ -127,7 +127,9 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-
+    kotlinOptions {
+            jvmTarget = "1.8"
+        }
     defaultConfig {
         applicationId "com.front_rn"
         minSdkVersion rootProject.ext.minSdkVersion
@@ -181,6 +183,7 @@ android {
 }
 
 dependencies {
+    implementation "com.kakao.sdk:v2-user:2.3.0"
     implementation project(':@react-native-community_datetimepicker')
     implementation fileTree(dir: "libs", include: ["*.jar"])
     //noinspection GradleDynamicVersion

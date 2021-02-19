@@ -5,7 +5,7 @@ platform :ios, '11.0'
 
 target 'front_RN' do
   config = use_native_modules!
-
+  pod 'KakaoOpenSDK', '~> 1.21.0' # append this line
   use_react_native!(:path => config["reactNativePath"])
 
   target 'front_RNTests' do

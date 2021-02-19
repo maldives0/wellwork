@@ -1,15 +1,15 @@
-import React, {useState, useCallback} from 'react';
+import React, { useState, useCallback } from "react";
 import {
   StyleSheet,
   SafeAreaView,
   ScrollView,
-    Text,
-    Platform,
+  Text,
+  Platform,
   View,
-} from 'react-native';
-import ApplyCalendarPicker from '../../Shared/ApplyCalendarPicker';
+} from "react-native";
+import ApplyCalendarPicker from "../../Shared/ApplyCalendarPicker";
 
-function ApplyForm({route, navigation}) {
+function ApplyForm({ route, navigation }) {
   const type = route.params.type;
   let str = JSON.stringify(type);
 
@@ -29,18 +29,18 @@ function ApplyForm({route, navigation}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
   scrollView: {
     marginTop: 10,
   },
   title: {
     fontSize: 20,
-    marginBottom: 10,
+    margin: 16,
   },
-  iosOnly:{
-    paddingTop: (Platform.OS === 'ios') && 36
+  iosOnly: {
+    paddingTop: Platform.OS === "ios" && 36,
   },
 });
 
