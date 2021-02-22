@@ -4,9 +4,9 @@ import { Input, Button } from "react-native-elements";
 import axios from "axios";
 import firebase from "firebase";
 import AntDesign from "react-native-vector-icons/AntDesign";
-import GoToButton from "../../test/GoToButton";
+import GoToButton from "../../Shared/GoToButton";
 import { BasicButton } from "../../Shared/BasicStyles";
-function LoginForm({ route, navigation }) {
+function OTPForm({ route, navigation }) {
   const [phone, setPhone] = useState("");
   const [code, setCode] = useState("");
   const [phoneErrorMessage, setPhoneErrorMessage] = useState("");
@@ -24,7 +24,7 @@ function LoginForm({ route, navigation }) {
       // phone :  phone, code: code
       // });
     } catch (err) {
-      console.error(err);
+      console.dir(err);
     }
   }, []);
   const onSubmitCode = useCallback(async () => {
@@ -38,7 +38,7 @@ function LoginForm({ route, navigation }) {
       // });
       // firbase.auth().signInWithCustomToken(data.token);
     } catch (err) {
-      console.error(err);
+      console.dir(err);
     }
   }, []);
 
@@ -76,7 +76,7 @@ function LoginForm({ route, navigation }) {
           <Text style={styles.buttonText}>확인</Text>
         </BasicButton>
       </View>
-      <GoToButton screenName="프로필" />
+      {/* <GoToButton screenName="프로필" /> */}
     </SafeAreaView>
   );
 }
@@ -108,4 +108,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LoginForm;
+export default OTPForm;

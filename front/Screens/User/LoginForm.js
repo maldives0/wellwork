@@ -4,7 +4,7 @@ import { Input, Button } from "react-native-elements";
 import axios from "axios";
 import firebase from "firebase";
 import AntDesign from "react-native-vector-icons/AntDesign";
-import GoToButton from "../../test/GoToButton";
+import GoToButton from "../../Shared/GoToButton";
 import { BasicButton } from "../../Shared/BasicStyles";
 import KakaoLogins, { KAKAO_AUTH_TYPES } from "@react-native-seoul/kakao-login";
 import NativeButton from "apsl-react-native-button";
@@ -23,7 +23,7 @@ const PROFILE_EMPTY = {
   profile_image_url: "",
 };
 
-function LoginForm({ route, navigation }) {
+function LoganotherInForm({ route, navigation }) {
   const [email, setEmail] = useState("@aiskorea.co.kr");
   const [password, setPassword] = useState("");
   const [emailErrorMessage, setEmailErrorMessage] = useState("");
@@ -41,7 +41,7 @@ function LoginForm({ route, navigation }) {
         setPasswordErrorMessage("비밀번호를 확인해주세요.");
       }
     } catch (err) {
-      console.error(err);
+      console.dir(err);
     }
   }, []);
   const kakaoLogin = () => {
@@ -68,7 +68,7 @@ function LoginForm({ route, navigation }) {
   };
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.formLayout}>
+      <View style={styles.rowstyle}>
         <Input
           style={styles.inputLayout}
           value={email}
@@ -79,7 +79,7 @@ function LoginForm({ route, navigation }) {
           placeholder="이메일"
         />
       </View>
-      <View style={styles.formLayout}>
+      <View style={styles.rowstyle}>
         <Input
           style={styles.inputLayout}
           value={password}
@@ -93,21 +93,20 @@ function LoginForm({ route, navigation }) {
       </View>
       <View style={styles.buttonAreaLayout}>
         <BasicButton onPress={onSubmit}>
-          <Text style={styles.buttonText}>로그인하기</Text>
+          <Text style={styles.buttonText}>로그인</Text>
         </BasicButton>
       </View>
-      <GoToButton screenName="회원가입하기" />
-      <GoToButton screenName="휴대폰번호로 로그인하기" />
-      <GoToButton screenName="카카오로 로그인하기" />
-      <NativeButton
-        isLoading={loginLoading}
-        onPress={kakaoLogin}
-        activeOpacity={0.5}
-        style={styles.btnKakaoLogin}
-        textStyle={styles.txtKakaoLogin}
-      >
-        LOGIN
-      </NativeButton>
+      <View style={styles.rowstyle}>
+        <Text style={styles.registerInfo}>아직 회원이 아니신가요?</Text>
+        <GoToButton screenName="회원가입하기" />
+      </View>
+      <View>
+        <Text style={styles.anotherInfo}>다른 방식으로 로그인하기</Text>
+        <View style={styles.rowstyle}>
+          <GoToButton screenName="휴대폰번호" />
+          <GoToButton screenName="카카오" />
+        </View>
+      </View>
     </SafeAreaView>
   );
 }
@@ -122,16 +121,25 @@ const styles = StyleSheet.create({
     padding: 10,
     fontSize: 20,
   },
-  formLayout: {
-    justifyContent: "center",
-
-    flexDirection: "row",
+  registerInfo: {
+    fontSize: 16,
+    textAlign: "center",
+  },
+  anotherInfo: {
+    fontSize: 16,
+    textAlign: "center",
     marginBottom: 6,
+  },
+  rowstyle: {
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row",
+    marginBottom: 16,
   },
   buttonAreaLayout: {
     fontSize: 20,
     flexDirection: "row-reverse",
-    marginBottom: 26,
+    marginBottom: 36,
   },
   buttonText: {
     color: "#fff",
@@ -147,4 +155,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LoginForm;
+export default LoganotherInForm;

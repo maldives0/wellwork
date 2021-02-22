@@ -3,14 +3,14 @@ import { createStackNavigator } from "@react-navigation/stack";
 import firebase from "firebase";
 import LoginForm from "../Screens/User/LoginForm";
 import RegisterForm from "../Screens/User/RegisterForm";
-import OTPRegisterForm from "../Screens/User/OTPRegisterForm";
+import OTPForm from "../Screens/User/OTPForm";
 import KakaoForm from "../Screens/User/KakaoForm";
 import UserProfile from "../Screens/User/UserProfile";
 
 const Stack = createStackNavigator();
 
 function StackApplyScreen() {
-  // useEffect(() => {
+  // useEffect(() => {s
   //   const firebaseConfig = {
   //     apiKey: 'AIzaSyAtPaikIcrL0kv7mhiIAAU3VG5yDsbrWRE',
   //     authDomain: 'one-time-password-24b66.firebaseapp.com',
@@ -40,14 +40,14 @@ function StackApplyScreen() {
         }}
       />
       <Stack.Screen
-        name="휴대폰번호로 로그인하기"
-        component={OTPRegisterForm}
+        name="휴대폰번호"
+        component={OTPForm}
         options={{
           headerShown: true,
         }}
       />
       <Stack.Screen
-        name="카카오로 로그인하기"
+        name="카카오"
         component={KakaoForm}
         options={{
           headerShown: true,
