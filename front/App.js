@@ -1,15 +1,15 @@
-import React, { useEffect } from "react";
-import { NavigationContainer } from "@react-navigation/native";
+import React, { useEffect } from 'react';
+import { NavigationContainer } from '@react-navigation/native';
 
 // // Context API
 // import Auth from './Context/store/Auth';
 
 // Navigatiors
-import Main from "./Navigators/Main";
+import Main from './Navigators/Main';
 
 // Screens
-import Header from "./Shared/Header";
-import firebase from "firebase";
+import Header from './Components/Header';
+import firebase from 'firebase';
 const App = () => {
   // useEffect(() => {
   //   const firebaseConfig = {

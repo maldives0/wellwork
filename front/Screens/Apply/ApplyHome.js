@@ -8,8 +8,8 @@ import {
   Platform,
 } from 'react-native';
 
-import WorkCalendar from '../../Shared/WorkCalendar';
-import ApplyModal from '../../Shared/ApplyModal';
+import WorkCalendar from '../../Components/WorkCalendar';
+import ApplyModal from '../../Components/ApplyModal';
 
 const ApplyHome = ({ navigation, route }) => {
   const [nickname, setNickname] = useState('momo');

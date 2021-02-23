@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import { Platform, StyleSheet, Text, View, Image } from "react-native";
+import React, { useState } from 'react';
+import { Platform, StyleSheet, Text, View, Image } from 'react-native';
 
-import KakaoLogins, { KAKAO_AUTH_TYPES } from "@react-native-seoul/kakao-login";
-import NativeButton from "apsl-react-native-button";
+import KakaoLogins, { KAKAO_AUTH_TYPES } from '@react-native-seoul/kakao-login';
+import NativeButton from 'apsl-react-native-button';
 
 if (!KakaoLogins) {
-  console.error("Module is Not Linked");
+  console.error('Module is Not Linked');
 }
 
 const logCallback = (log, callback) => {
@@ -13,11 +13,11 @@ const logCallback = (log, callback) => {
   callback;
 };
 
-const TOKEN_EMPTY = "token has not fetched";
+const TOKEN_EMPTY = 'token has not fetched';
 const PROFILE_EMPTY = {
-  id: "profile has not fetched",
-  email: "profile has not fetched",
-  profile_image_url: "",
+  id: 'profile has not fetched',
+  email: 'profile has not fetched',
+  profile_image_url: '',
 };
 
 export default function App() {
@@ -25,35 +25,35 @@ export default function App() {
   const [logoutLoading, setLogoutLoading] = useState(false);
   const [profileLoading, setProfileLoading] = useState(false);
   const [unlinkLoading, setUnlinkLoading] = useState(false);
-
+  const [passTextInput, setPassTextInput] = useState(null);
   const [token, setToken] = useState(TOKEN_EMPTY);
   const [profile, setProfile] = useState(PROFILE_EMPTY);
 
   const kakaoLogin = () => {
-    logCallback("Login Start", setLoginLoading(true));
+    logCallback('Login Start', setLoginLoading(true));
 
     KakaoLogins.login([KAKAO_AUTH_TYPES.Talk, KAKAO_AUTH_TYPES.Account])
       .then((result) => {
         setToken(result.accessToken);
         logCallback(
           `Login Finished:${JSON.stringify(result)}`,
-          setLoginLoading(false)
+          setLoginLoading(false),
         );
       })
       .catch((err) => {
-        if (err.code === "E_CANCELLED_OPERATION") {
+        if (err.code === 'E_CANCELLED_OPERATION') {
           logCallback(`Login Cancelled:${err.message}`, setLoginLoading(false));
         } else {
           logCallback(
             `Login Failed:${err.code} ${err.message}`,
-            setLoginLoading(false)
+            setLoginLoading(false),
           );
         }
       });
   };
 
   const kakaoLogout = () => {
-    logCallback("Logout Start", setLogoutLoading(true));
+    logCallback('Logout Start', setLogoutLoading(true));
 
     KakaoLogins.logout()
       .then((result) => {
@@ -64,32 +64,32 @@ export default function App() {
       .catch((err) => {
         logCallback(
           `Logout Failed:${err.code} ${err.message}`,
-          setLogoutLoading(false)
+          setLogoutLoading(false),
         );
       });
   };
 
   const getProfile = () => {
-    logCallback("Get Profile Start", setProfileLoading(true));
+    logCallback('Get Profile Start', setProfileLoading(true));
 
     KakaoLogins.getProfile()
       .then((result) => {
         setProfile(result);
         logCallback(
           `Get Profile Finished:${JSON.stringify(result)}`,
-          setProfileLoading(false)
+          setProfileLoading(false),
         );
       })
       .catch((err) => {
         logCallback(
           `Get Profile Failed:${err.code} ${err.message}`,
-          setProfileLoading(false)
+          setProfileLoading(false),
         );
       });
   };
 
   const unlinkKakao = () => {
-    logCallback("Unlink Start", setUnlinkLoading(true));
+    logCallback('Unlink Start', setUnlinkLoading(true));
 
     KakaoLogins.unlink()
       .then((result) => {
@@ -100,7 +100,7 @@ export default function App() {
       .catch((err) => {
         logCallback(
           `Unlink Failed:${err.code} ${err.message}`,
-          setUnlinkLoading(false)
+          setUnlinkLoading(false),
         );
       });
   };
@@ -160,30 +160,30 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: "column",
-    marginTop: Platform.OS === "ios" ? 0 : 24,
-    paddingTop: Platform.OS === "ios" ? 24 : 0,
-    backgroundColor: "white",
+    flexDirection: 'column',
+    marginTop: Platform.OS === 'ios' ? 0 : 24,
+    paddingTop: Platform.OS === 'ios' ? 24 : 0,
+    backgroundColor: 'white',
   },
   profile: {
     flex: 4,
-    alignItems: "center",
-    justifyContent: "flex-end",
+    alignItems: 'center',
+    justifyContent: 'flex-end',
   },
   profilePhoto: {
     width: 120,
     height: 120,
     borderWidth: 1,
-    borderColor: "black",
+    borderColor: 'black',
   },
   content: {
     flex: 6,
-    justifyContent: "flex-start",
-    alignItems: "center",
+    justifyContent: 'flex-start',
+    alignItems: 'center',
   },
   title: {
     fontSize: 24,
-    fontWeight: "bold",
+    fontWeight: 'bold',
   },
   token: {
     width: 200,
@@ -191,20 +191,20 @@ const styles = StyleSheet.create({
     padding: 5,
     borderRadius: 8,
     marginVertical: 20,
-    backgroundColor: "grey",
-    color: "white",
-    textAlign: "center",
+    backgroundColor: 'grey',
+    color: 'white',
+    textAlign: 'center',
   },
   btnKakaoLogin: {
     height: 48,
     width: 240,
-    alignSelf: "center",
-    backgroundColor: "#F8E71C",
+    alignSelf: 'center',
+    backgroundColor: '#F8E71C',
     borderRadius: 0,
     borderWidth: 0,
   },
   txtKakaoLogin: {
     fontSize: 16,
-    color: "#3d3d3d",
+    color: '#3d3d3d',
   },
 });

@@ -7,7 +7,7 @@ import {
   Platform,
   View,
 } from 'react-native';
-import ApplyCalendarPicker from '../../Shared/ApplyCalendarPicker';
+import ApplyCalendarPicker from '../../Components/ApplyCalendarPicker';
 
 function ApplyForm({ route, navigation }) {
   const type = route.params.type;

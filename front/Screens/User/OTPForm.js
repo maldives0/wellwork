@@ -1,21 +1,21 @@
-import React, { useState, useCallback } from "react";
-import { StyleSheet, SafeAreaView, View, Text } from "react-native";
-import { Input, Button } from "react-native-elements";
-import axios from "axios";
-import firebase from "firebase";
-import AntDesign from "react-native-vector-icons/AntDesign";
-import GoToButton from "../../Shared/GoToButton";
-import { BasicButton } from "../../Shared/BasicStyles";
+import React, { useState, useCallback } from 'react';
+import { StyleSheet, SafeAreaView, View, Text } from 'react-native';
+import { Input, Button } from 'react-native-elements';
+import axios from 'axios';
+import firebase from 'firebase';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import GoToButton from '../../Components/GoToButton';
+import { BasicButton } from '../../Components/BasicStyles';
 function OTPForm({ route, navigation }) {
-  const [phone, setPhone] = useState("");
-  const [code, setCode] = useState("");
-  const [phoneErrorMessage, setPhoneErrorMessage] = useState("");
-  const [codeErrorMessage, setCodeErrorMessage] = useState("");
+  const [phone, setPhone] = useState('');
+  const [code, setCode] = useState('');
+  const [phoneErrorMessage, setPhoneErrorMessage] = useState('');
+  const [codeErrorMessage, setCodeErrorMessage] = useState('');
 
   const onSubmitPhone = useCallback(async () => {
     try {
       if (!phoneErrorMessage) {
-        setPhoneErrorMessage("전화번호를 확인해주세요.");
+        setPhoneErrorMessage('전화번호를 확인해주세요.');
       }
       // await axios.post(`${Root_URL}/createUser`,{
       // phone :  phone, code: code
@@ -30,7 +30,7 @@ function OTPForm({ route, navigation }) {
   const onSubmitCode = useCallback(async () => {
     try {
       if (!codeErrorMessage) {
-        setCodeErrorMessage("확인코드를 확인해주세요.");
+        setCodeErrorMessage('확인코드를 확인해주세요.');
       }
 
       // let {data} = await axios.post(`${Root_URL}/verifyOneTimePassword`,{
@@ -48,9 +48,9 @@ function OTPForm({ route, navigation }) {
         <Input
           style={styles.inputLayout}
           value={phone}
-          leftIcon={{ type: "antdesign", name: "mobile1" }}
+          leftIcon={{ type: 'antdesign', name: 'mobile1' }}
           onChangeText={(phone) => setPhone(phone)}
-          errorStyle={{ color: "red", fontSize: 16 }}
+          errorStyle={{ color: 'red', fontSize: 16 }}
           errorMessage={phoneErrorMessage}
           placeholder="전화번호"
         />
@@ -65,8 +65,8 @@ function OTPForm({ route, navigation }) {
           style={styles.inputLayout}
           value={code}
           onChangeText={(phone) => setCode(phone)}
-          leftIcon={{ type: "antdesign", name: "questioncircleo" }}
-          errorStyle={{ color: "red", fontSize: 16 }}
+          leftIcon={{ type: 'antdesign', name: 'questioncircleo' }}
+          errorStyle={{ color: 'red', fontSize: 16 }}
           errorMessage={codeErrorMessage}
           placeholder="코드번호"
         />
@@ -84,26 +84,26 @@ const styles = StyleSheet.create({
   container: {
     margin: 16,
     flex: 1,
-    alignContent: "center",
-    justifyContent: "center",
+    alignContent: 'center',
+    justifyContent: 'center',
   },
   inputLayout: {
     padding: 10,
     fontSize: 20,
   },
   formLayout: {
-    justifyContent: "center",
+    justifyContent: 'center',
 
-    flexDirection: "row",
+    flexDirection: 'row',
     marginBottom: 6,
   },
   buttonAreaLayout: {
     fontSize: 20,
-    flexDirection: "row-reverse",
+    flexDirection: 'row-reverse',
     marginBottom: 26,
   },
   buttonText: {
-    color: "#fff",
+    color: '#fff',
     fontSize: 20,
   },
 });
