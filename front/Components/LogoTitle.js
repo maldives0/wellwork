@@ -1,20 +1,20 @@
 import React from 'react';
-import {StyleSheet, Image, Text, SafeAreaView} from 'react-native';
+import { StyleSheet, Image, Text, SafeAreaView } from 'react-native';
 
-const Header = () => {
+const LogoTitle = () => {
   return (
-    <SafeAreaView style={styles.header}>
+    <SafeAreaView style={styles.logoTitle}>
       <Image
         source={require('../assets/Logo.png')}
         resizeMode="contain"
-        style={{height: 60}}
+        style={{ height: 60 }}
       />
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  header: {
+  logoTitle: {
     width: '100%',
     flexDirection: 'row',
     alignContent: 'center',
@@ -24,4 +24,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Header;
+export default LogoTitle;

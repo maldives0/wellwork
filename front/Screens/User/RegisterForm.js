@@ -8,32 +8,36 @@ import {
   Form,
   TextInput,
 } from 'react-native';
-import { Input, Button } from 'react-native-elements';
+import { Input } from 'react-native-elements';
 import axios from 'axios';
 
-import AntDesign from 'react-native-vector-icons/AntDesign';
-import AuthInput from '../../Components/AuthInput';
 import useInput from '../../hooks/useInput';
-import GoToButton from '../../Components/GoToButton';
+
 import { BasicButton } from '../../Components/BasicStyles';
-import Icon from 'react-native-vector-icons/AntDesign';
+
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
-const inputRef = () => {
-  const ref = useRef(null);
-  const onSubmitEditing = () => {
-    ref.current.focus();
-  };
-  return { ref, onSubmitEditing };
-};
-
 function RegisterForm({ route, navigation }) {
-  const ref1 = inputRef();
-  const ref2 = inputRef();
-  const ref3 = useRef(null);
-  const ref4 = useRef(null);
-  const [email, onChangeEmail, setEmail] = useInput('');
+  const ref_input = [];
+  ref_input[0] = useRef();
+  ref_input[1] = useRef();
+  ref_input[2] = useRef();
+  ref_input[3] = useRef();
+  const focusNext = (index) => {
+    if (index < ref_input.length - 1) {
+      ref_input[index + 1].current.focus();
+    }
+    if (index == ref_input.length - 1) {
+      ref_input[index].current.blur();
+    }
+  };
+  const focusPrev = (key, index) => {
+    if (key === 'Backspace' && index !== 0) {
+      ref_input[index - 1].current.focus();
+    }
+  };
 
+  const [email, onChangeEmail, setEmail] = useInput('');
   const [nickname, onChangeNickname, setNickname] = useInput('');
   const [password, onChangePassword, setPassword] = useInput('');
   const [passwordCheck, onChangePasswordCheck, setPasswordCheck] = useInput('');
@@ -43,8 +47,13 @@ function RegisterForm({ route, navigation }) {
   const [errorNickname, setErrorNickname] = useState('');
   const [errorPassword, setErrorPassword] = useState('');
   const [errorPasswordCheck, setErrorPasswordCheck] = useState('');
+  const [isSecureText, setIsSecureText] = useState(true);
 
   const onSubmit = async () => {
+    setErrorEmail('');
+    setErrorNickname('');
+    setErrorPassword('');
+    setErrorPasswordCheck('');
     const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     if (!email || !email.trim() || !emailRegex.test(email)) {
       return setErrorEmail('유효하지 않은 이메일입니다.');
@@ -61,10 +70,6 @@ function RegisterForm({ route, navigation }) {
     try {
       // console.warn(email, nickname, password);
 
-      setErrorEmail('');
-      setErrorNickname('');
-      setErrorPassword('');
-      setErrorPasswordCheck('');
       setEmail('');
       setNickname('');
       setPassword('');
@@ -81,82 +86,77 @@ function RegisterForm({ route, navigation }) {
         contentContainerStyle={styles.scrollView}
         scrollEnabled={false}
       >
-        <View>
-          <TextInput
-            // {...ref1}
-            value={email}
+        <View style={styles.rowstyle}>
+          <Input
             onChangeText={onChangeEmail}
-            autoFocus
-            ref={(input) => {
-              console.log('input1', input);
-            }}
-            // onSubmitEditing={() => {
-            //   ref2.current.focus();
-            // }}
-            returnKeyType="next"
-            placeholder="이메일"
-          />
-          <TextInput
-            // {...ref2}
-            value={nickname}
-            onChangeText={onChangeNickname}
-            // ref={ref2}
-            // onSubmitEditing={() => null}
-            returnKeyType="done"
-            placeholder="닉네임"
-          />
-        </View>
-        {/* <View style={styles.rowstyle}>
-          <AuthInput
-            ref={ref1}
-            onChangeText={onChangeEmail}
-            keyboardType="email-address"
-            returnKeyType="go"
+            keyboardType={'email-address'}
             autoCorrect={false}
             autoFocus={true}
             errorMessage={errorEmail}
-            leftIcon={{ type: 'antdesign', name: 'mail' }}
+            leftIcon={{
+              type: 'antdesign',
+              name: 'user',
+            }}
             placeholder="이메일"
-            onSubmitEditing={() => ref2.current?.focus()}
+            ref={ref_input[0]}
+            onSubmitEditing={(text) => focusNext(0)}
+            clearTextOnFocus={true}
+            onFocus={() => setEmail('')}
+            // onKeyPress={(e) => focusPrev(e.nativeEvent.key, 0)}
+            autoCapitalize={'none'}
           />
         </View>
         <View style={styles.rowstyle}>
-          <AuthInput
-            ref={ref2}
-            onSubmitEditing={() => ref3.current?.focus()}
+          <Input
+            ref={ref_input[1]}
+            onSubmitEditing={(text) => focusNext(1)}
+            // onKeyPress={(e) => focusPrev(e.nativeEvent.key, 1)}
             onChangeText={onChangeNickname}
-            autoCapitalize="words"
+            autoCapitalize={'words'}
             errorMessage={errorNickname}
             placeholder="닉네임"
-            leftIcon={{ type: 'antdesign', name: 'user' }}
+            leftIcon={{
+              type: 'antdesign',
+              name: 'smileo',
+            }}
           />
-        </View> */}
+        </View>
         <View style={styles.rowstyle}>
-          <AuthInput
-            ref={ref3}
-            onSubmitEditing={() => ref4.current?.focus()}
+          <Input
+            ref={ref_input[2]}
+            onSubmitEditing={(text) => focusNext(2)}
+            // onKeyPress={(e) => focusPrev(e.nativeEvent.key, 2)}
             onChangeText={onChangePassword}
-            keyboardType="email-address"
-            returnKeyType="go"
             autoCorrect={false}
             errorMessage={errorPassword}
             leftIcon={{ type: 'antdesign', name: 'key' }}
-            rightIcon={{ type: 'antdesign', name: 'eyeo' }}
+            rightIcon={{
+              type: 'antdesign',
+              name: isSecureText ? 'eye' : 'eyeo',
+              onPress: () => setIsSecureText((prev) => !prev),
+            }}
             placeholder="비밀번호"
+            autoCapitalize={'none'}
+            secureTextEntry={isSecureText}
           />
         </View>
         <View style={styles.rowstyle}>
-          <AuthInput
-            ref={ref4}
+          <Input
+            ref={ref_input[3]}
+            onSubmitEditing={(text) => focusNext(3)}
+            // onKeyPress={(e) => focusPrev(e.nativeEvent.key, 3)}
             onChangeText={onChangePasswordCheck}
-            keyboardType="email-address"
-            returnKeyType="go"
             autoCorrect={false}
             errorMessage={errorPasswordCheck}
             leftIcon={{ type: 'antdesign', name: 'key' }}
-            rightIcon={{ type: 'antdesign', name: 'eyeo' }}
+            rightIcon={{
+              type: 'antdesign',
+              name: isSecureText ? 'eye' : 'eyeo',
+              onPress: () => setIsSecureText((prev) => !prev),
+            }}
             placeholder="비밀번호 확인하기"
-            blurOnSubmit={true}
+            autoCapitalize={'none'}
+            secureTextEntry={isSecureText}
           />
         </View>
 
@@ -193,7 +193,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'row',
-    marginBottom: 6,
+    marginBottom: 16,
   },
   buttonAreaLayout: {
     fontSize: 20,

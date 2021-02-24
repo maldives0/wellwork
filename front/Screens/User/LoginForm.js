@@ -1,10 +1,9 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useRef } from 'react';
 import { StyleSheet, SafeAreaView, View, Text } from 'react-native';
 import { Input, Button } from 'react-native-elements';
 import axios from 'axios';
 import firebase from 'firebase';
-import AntDesign from 'react-native-vector-icons/AntDesign';
-import AuthInput from '../../Components/AuthInput';
+
 import useInput from '../../hooks/useInput';
 import GoToButton from '../../Components/GoToButton';
 import { BasicButton } from '../../Components/BasicStyles';
@@ -25,29 +24,28 @@ const PROFILE_EMPTY = {
 };
 
 function LogInForm({ route, navigation }) {
-  const emailInput = useInput('');
-  const nicknameInput = useInput('');
-  const passwordInput = useInput('');
-  const [loginLoading, setLoginLoading] = useState(false);
-  const [token, setToken] = useState(TOKEN_EMPTY);
-  const [profile, setProfile] = useState(PROFILE_EMPTY);
+  const ref_input = [];
+  ref_input[0] = useRef();
+  ref_input[1] = useRef();
 
+  const focusNext = (index) => {
+    if (index < ref_input.length - 1) {
+      ref_input[index + 1].current.focus();
+    }
+    if (index == ref_input.length - 1) {
+      ref_input[index].current.blur();
+    }
+  };
+  const [email, onChangeEmail, setEmail] = useInput('');
+  const [nickname, onChangeNickname, setNickname] = useInput('');
+  const [password, onChangePassword, setPassword] = useInput('');
+  const [misMatchError, setMisMatchError] = useState(false);
+  const [isSecureText, setIsSecureText] = useState(true);
   const onSubmit = async () => {
-    const { value: email } = emailInput;
-    const { value: nickname } = nicknameInput;
-    const { value: password } = passwordInput;
-    const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
-    if (!emailRegex.test(email)) {
-      return Alert.alert('유효하지 않은 이메일입니다.');
-    }
-    if (nickname === '') {
-      return Alert.alert('닉네임을 입력해 주세요.');
-    }
-    if (password === '') {
-      return Alert.alert('패스워드를 입력해 주세요.');
-    }
     try {
+      setEmail('');
+
+      setPassword('');
     } catch (err) {
       console.dir(err);
     }
@@ -77,26 +75,46 @@ function LogInForm({ route, navigation }) {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.rowstyle}>
-        <AuthInput
-          style={styles.inputLayout}
-          leftIcon={{ type: 'antdesign', name: 'mail' }}
-          onChangeText={(email) => setEmail(email)}
-          // errorStyle={{ color: 'red', fontSize: 16 }}
-          // errorMessage={emailErrorMessage}
+        <Input
+          onChangeText={onChangeEmail}
+          keyboardType={'email-address'}
+          autoCorrect={false}
+          autoFocus={true}
+          leftIcon={{
+            type: 'antdesign',
+            name: 'user',
+          }}
           placeholder="이메일"
+          ref={ref_input[0]}
+          onSubmitEditing={(text) => focusNext(0)}
+          clearTextOnFocus={true}
+          onFocus={() => setEmail('')}
+          // onKeyPress={(e) => focusPrev(e.nativeEvent.key, 0)}
+          autoCapitalize={'none'}
         />
       </View>
       <View style={styles.rowstyle}>
-        {/* <Input
-          style={styles.inputLayout}
-          value={password}
-          rightIcon={{ type: 'antdesign', name: 'eyeo' }}
+        <Input
+          ref={ref_input[1]}
+          onSubmitEditing={(text) => focusNext(1)}
+          // onKeyPress={(e) => focusPrev(e.nativeEvent.key, 2)}
+          onChangeText={onChangePassword}
+          autoCorrect={false}
           leftIcon={{ type: 'antdesign', name: 'key' }}
-          onChangeText={(password) => setPassword(password)}
-          // errorStyle={{ color: 'red', fontSize: 16 }}
-          // errorMessage={passwordErrorMessage}
+          rightIcon={{
+            type: 'antdesign',
+            name: isSecureText ? 'eye' : 'eyeo',
+            onPress: () => setIsSecureText((prev) => !prev),
+          }}
           placeholder="비밀번호"
-        /> */}
+          autoCapitalize={'none'}
+          secureTextEntry={isSecureText}
+        />
+      </View>
+      <View style={styles.buttonAreaLayout}>
+        <Text style={styles.buttonText}>
+          {misMatchError && '이메일 또는 비밀번호가 일치하지 않습니다.'}
+        </Text>
       </View>
       <View style={styles.buttonAreaLayout}>
         <BasicButton onPress={onSubmit}>

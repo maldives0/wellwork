@@ -1,11 +1,11 @@
-import React, { useEffect } from "react";
-import { createStackNavigator } from "@react-navigation/stack";
-import firebase from "firebase";
-import LoginForm from "../Screens/User/LoginForm";
-import RegisterForm from "../Screens/User/RegisterForm";
-import OTPForm from "../Screens/User/OTPForm";
-import KakaoForm from "../Screens/User/KakaoForm";
-import UserProfile from "../Screens/User/UserProfile";
+import React, { useEffect } from 'react';
+import { createStackNavigator } from '@react-navigation/stack';
+import firebase from 'firebase';
+import LoginForm from '../Screens/User/LoginForm';
+import RegisterForm from '../Screens/User/RegisterForm';
+import OTPForm from '../Screens/User/OTPForm';
+import KakaoForm from '../Screens/User/KakaoForm';
+import UserProfile from '../Screens/User/UserProfile';
 
 const Stack = createStackNavigator();
 
@@ -24,42 +24,12 @@ function StackApplyScreen() {
   //   firebase.initializeApp(firebaseConfig);
   // }, []);
   return (
-    <Stack.Navigator>
-      <Stack.Screen
-        name="로그인"
-        component={LoginForm}
-        options={{
-          headerShown: false,
-        }}
-      />
-      <Stack.Screen
-        name="회원가입하기"
-        component={RegisterForm}
-        options={{
-          headerShown: true,
-        }}
-      />
-      <Stack.Screen
-        name="휴대폰번호"
-        component={OTPForm}
-        options={{
-          headerShown: true,
-        }}
-      />
-      <Stack.Screen
-        name="카카오"
-        component={KakaoForm}
-        options={{
-          headerShown: true,
-        }}
-      />
-      <Stack.Screen
-        name="프로필"
-        component={UserProfile}
-        options={{
-          headerShown: true,
-        }}
-      />
+    <Stack.Navigator initialRouteName="로그인">
+      <Stack.Screen name="로그인" component={LoginForm} />
+      <Stack.Screen name="회원가입하기" component={RegisterForm} />
+      <Stack.Screen name="휴대폰번호" component={OTPForm} />
+      <Stack.Screen name="카카오" component={KakaoForm} />
+      <Stack.Screen name="프로필" component={UserProfile} />
     </Stack.Navigator>
   );
 }

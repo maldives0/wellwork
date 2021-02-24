@@ -8,7 +8,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import Main from './Navigators/Main';
 
 // Screens
-import Header from './Components/Header';
+
 import firebase from 'firebase';
 const App = () => {
   // useEffect(() => {
@@ -26,7 +26,6 @@ const App = () => {
   // }, []);
   return (
     <NavigationContainer>
-      <Header />
       <Main />
     </NavigationContainer>
   );

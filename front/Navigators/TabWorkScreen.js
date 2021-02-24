@@ -9,6 +9,8 @@ import SignOutTimePicker from '../Components/SignOutTimePicker';
 import moment from 'moment';
 import 'moment/locale/ko';
 import 'moment-timezone';
+import { createStackNavigator } from '@react-navigation/stack';
+import LogoTitle from '../Components/LogoTitle';
 
 const TabWorkScreen = ({ navigation, route }) => {
   moment.locale('ko');
@@ -25,6 +27,7 @@ const TabWorkScreen = ({ navigation, route }) => {
 
   return (
     <SafeAreaView style={styles.container}>
+      <LogoTitle />
       <View>
         <View style={styles.datePickerLayout}>
           <DatePicker />
