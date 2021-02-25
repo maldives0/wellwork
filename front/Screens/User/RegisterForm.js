@@ -4,9 +4,7 @@ import {
   SafeAreaView,
   View,
   Text,
-  Alert,
-  Form,
-  TextInput,
+  KeyboardAvoidingView,
 } from 'react-native';
 import { Input } from 'react-native-elements';
 import axios from 'axios';
@@ -81,10 +79,11 @@ function RegisterForm({ route, navigation }) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <KeyboardAwareScrollView
-        resetScrollToCoords={{ x: 0, y: 0 }}
-        contentContainerStyle={styles.scrollView}
-        scrollEnabled={false}
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'position'}
+        style={styles.container}
+        contentContainerStyle={{ flex: 1 }}
+        keyboardVerticalOffset={-550}
       >
         <View style={styles.rowstyle}>
           <Input
@@ -165,19 +164,22 @@ function RegisterForm({ route, navigation }) {
             <Text style={styles.buttonText}>가입하기</Text>
           </BasicButton>
         </View>
-      </KeyboardAwareScrollView>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 }
 const styles = StyleSheet.create({
   container: {
-    margin: 16,
     flex: 1,
-    alignContent: 'center',
+    alignItems: 'center',
     justifyContent: 'center',
+    padding: 16,
   },
   scrollView: {
-    padding: 16,
+    padding: 26,
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 
   registerInfo: {

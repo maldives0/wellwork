@@ -21,8 +21,11 @@ const ApplyHome = ({ navigation, route }) => {
         <View>
           <Text style={styles.viewText}>
             현재 {nickname}님이 사용할 수 있는{'\n'}
-            연차일은 <Text style={{ fontSize: 30 }}>{annualLeave}</Text>일
-            입니다.
+            연차일은{'  '}
+            <Text style={{ fontSize: 30, letterSpacing: 5, marginRight: 15 }}>
+              {annualLeave}
+            </Text>{' '}
+            일 입니다.
           </Text>
         </View>
         <View style={styles.iosOnly}>
@@ -43,7 +46,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   iosOnly: {
-    paddingTop: Platform.OS === 'ios' ? 36 : 0,
+    paddingTop: Platform.OS === 'ios' ? 36 : 26,
   },
   viewText: {
     fontSize: Platform.OS === 'ios' ? 20 : 15,
