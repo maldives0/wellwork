@@ -1,4 +1,4 @@
-import styled, {css} from '@emotion/native';
+import styled, { css } from '@emotion/native';
 
 export const BasicButton = styled.TouchableOpacity`
   flex-direction: row;
@@ -20,6 +20,11 @@ export const BorderButton = styled.TouchableOpacity`
   margin: 10px;
 `;
 
+export const CloseButtonCoord = styled.Text`
+  position: absolute;
+  top: 16px;
+  right: 50px;
+`;
 // export const applyColorType = styled.View`
 //   border-radius: 100%;
 //   width: 10px;

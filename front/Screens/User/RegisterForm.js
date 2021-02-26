@@ -1,19 +1,19 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import {
   StyleSheet,
   SafeAreaView,
   View,
   Text,
   KeyboardAvoidingView,
+  TextInput,
 } from 'react-native';
 import { Input } from 'react-native-elements';
 import axios from 'axios';
 
 import useInput from '../../hooks/useInput';
-
-import { BasicButton } from '../../Components/BasicStyles';
-
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { BasicButton, CloseButtonCoord } from '../../Components/BasicStyles';
+import AuthInput from '../../Components/AuthInput';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 
 function RegisterForm({ route, navigation }) {
   const ref_input = [];
@@ -35,10 +35,19 @@ function RegisterForm({ route, navigation }) {
     }
   };
 
-  const [email, onChangeEmail, setEmail] = useInput('');
-  const [nickname, onChangeNickname, setNickname] = useInput('');
-  const [password, onChangePassword, setPassword] = useInput('');
-  const [passwordCheck, onChangePasswordCheck, setPasswordCheck] = useInput('');
+  const [email, onChangeEmail, onResetEmail, setEmail] = useInput('');
+  const [nickname, onChangeNickname, onResetNickname, setNickname] = useInput(
+    '',
+  );
+  const [password, onChangePassword, onResetPassword, setPassword] = useInput(
+    '',
+  );
+  const [
+    passwordCheck,
+    onChangePasswordCheck,
+    onResetPasswordCheck,
+    setPasswordCheck,
+  ] = useInput('');
 
   const [loginLoading, setLoginLoading] = useState(false);
   const [errorEmail, setErrorEmail] = useState('');
@@ -46,7 +55,7 @@ function RegisterForm({ route, navigation }) {
   const [errorPassword, setErrorPassword] = useState('');
   const [errorPasswordCheck, setErrorPasswordCheck] = useState('');
   const [isSecureText, setIsSecureText] = useState(true);
-
+  const [isResetText, setIsResetText] = useState(false);
   const onSubmit = async () => {
     setErrorEmail('');
     setErrorNickname('');
@@ -87,6 +96,7 @@ function RegisterForm({ route, navigation }) {
       >
         <View style={styles.rowstyle}>
           <Input
+            value={email}
             onChangeText={onChangeEmail}
             keyboardType={'email-address'}
             autoCorrect={false}
@@ -104,12 +114,23 @@ function RegisterForm({ route, navigation }) {
             // onKeyPress={(e) => focusPrev(e.nativeEvent.key, 0)}
             autoCapitalize={'none'}
           />
+          <CloseButtonCoord>
+            {email && (
+              <AntDesign
+                name="closecircle"
+                color="grey"
+                size={16}
+                onPress={onResetEmail}
+              />
+            )}
+          </CloseButtonCoord>
         </View>
         <View style={styles.rowstyle}>
           <Input
             ref={ref_input[1]}
             onSubmitEditing={(text) => focusNext(1)}
             // onKeyPress={(e) => focusPrev(e.nativeEvent.key, 1)}
+            value={nickname}
             onChangeText={onChangeNickname}
             autoCapitalize={'words'}
             errorMessage={errorNickname}
@@ -119,16 +140,31 @@ function RegisterForm({ route, navigation }) {
               name: 'smileo',
             }}
           />
+          <CloseButtonCoord>
+            {nickname && (
+              <AntDesign
+                name="closecircle"
+                color="grey"
+                size={16}
+                onPress={onResetNickname}
+              />
+            )}
+          </CloseButtonCoord>
         </View>
         <View style={styles.rowstyle}>
           <Input
+            value={password}
+            onChangeText={onChangePassword}
             ref={ref_input[2]}
             onSubmitEditing={(text) => focusNext(2)}
             // onKeyPress={(e) => focusPrev(e.nativeEvent.key, 2)}
             onChangeText={onChangePassword}
             autoCorrect={false}
             errorMessage={errorPassword}
-            leftIcon={{ type: 'antdesign', name: 'key' }}
+            leftIcon={{
+              type: 'antdesign',
+              name: 'key',
+            }}
             rightIcon={{
               type: 'antdesign',
               name: isSecureText ? 'eye' : 'eyeo',
@@ -138,12 +174,23 @@ function RegisterForm({ route, navigation }) {
             autoCapitalize={'none'}
             secureTextEntry={isSecureText}
           />
+          <CloseButtonCoord>
+            {password && (
+              <AntDesign
+                name="closecircle"
+                color="grey"
+                size={16}
+                onPress={onResetPassword}
+              />
+            )}
+          </CloseButtonCoord>
         </View>
         <View style={styles.rowstyle}>
           <Input
             ref={ref_input[3]}
             onSubmitEditing={(text) => focusNext(3)}
             // onKeyPress={(e) => focusPrev(e.nativeEvent.key, 3)}
+            value={passwordCheck}
             onChangeText={onChangePasswordCheck}
             autoCorrect={false}
             errorMessage={errorPasswordCheck}
@@ -157,6 +204,16 @@ function RegisterForm({ route, navigation }) {
             autoCapitalize={'none'}
             secureTextEntry={isSecureText}
           />
+          <CloseButtonCoord>
+            {passwordCheck && (
+              <AntDesign
+                name="closecircle"
+                color="grey"
+                size={16}
+                onPress={onResetPasswordCheck}
+              />
+            )}
+          </CloseButtonCoord>
         </View>
 
         <View style={styles.buttonAreaLayout}>
@@ -206,6 +263,7 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 20,
   },
+
   btnKakaoLogin: {
     height: 48,
     width: 240,

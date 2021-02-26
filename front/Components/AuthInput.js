@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { Input } from 'react-native-elements';
 
 const AuthInput = ({
@@ -8,7 +8,7 @@ const AuthInput = ({
   returnKeyType = 'done',
   onChangeText,
   onSubmitEditing,
-  iconLeft = {},
+  iconLeft,
   iconRight,
   autoFocus = false,
   autoCorrect = true,
@@ -19,6 +19,19 @@ const AuthInput = ({
   ref,
   blurOnSubmit = false,
 }) => {
+  const ref_input = [];
+  ref_input[0] = useRef();
+  ref_input[1] = useRef();
+  ref_input[2] = useRef();
+  ref_input[3] = useRef();
+  const focusNext = (index) => {
+    if (index < ref_input.length - 1) {
+      ref_input[index + 1].current.focus();
+    }
+    if (index == ref_input.length - 1) {
+      ref_input[index].current.blur();
+    }
+  };
   return (
     <Input
       ref={ref}
@@ -32,7 +45,7 @@ const AuthInput = ({
       returnKeyType={returnKeyType}
       placeholder={placeholder}
       autoCapitalize={autoCapitalize}
-      onSubmitEditing={onSubmitEditing}
+      onSubmitEditing={() => focusNext}
       autoCorrect={autoCorrect}
       value={value}
       secureTextEntry={secureTextEntry}

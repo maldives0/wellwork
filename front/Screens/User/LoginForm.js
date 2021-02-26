@@ -6,9 +6,9 @@ import firebase from 'firebase';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import useInput from '../../hooks/useInput';
 import GoToButton from '../../Components/GoToButton';
-import { BasicButton } from '../../Components/BasicStyles';
+import { BasicButton, CloseButtonCoord } from '../../Components/BasicStyles';
 import KakaoLogins, { KAKAO_AUTH_TYPES } from '@react-native-seoul/kakao-login';
-
+import AntDesign from 'react-native-vector-icons/AntDesign';
 if (!KakaoLogins) {
   console.error('Module is Not Linked');
 }
@@ -36,12 +36,14 @@ function LogInForm({ route, navigation }) {
       ref_input[index].current.blur();
     }
   };
-  const [email, onChangeEmail, setEmail] = useInput('');
-  const [nickname, onChangeNickname, setNickname] = useInput('');
-  const [password, onChangePassword, setPassword] = useInput('');
+  const [email, onChangeEmail, onResetEmail, setEmail] = useInput('');
+
+  const [password, onChangePassword, onResetPassword, setPassword] = useInput(
+    '',
+  );
   const [misMatchError, setMisMatchError] = useState(false);
   const [isSecureText, setIsSecureText] = useState(true);
-  const [isReset, setIsReset] = useState(false);
+  const [isResetText, setIsResetText] = useState(false);
 
   const onSubmit = async () => {
     try {
@@ -83,9 +85,11 @@ function LogInForm({ route, navigation }) {
         <View>
           <View style={styles.rowstyle}>
             <Input
+              value={email}
               onChangeText={onChangeEmail}
               keyboardType={'email-address'}
               autoCorrect={false}
+              autoFocus={true}
               leftIcon={{
                 type: 'antdesign',
                 name: 'user',
@@ -98,15 +102,30 @@ function LogInForm({ route, navigation }) {
               // onKeyPress={(e) => focusPrev(e.nativeEvent.key, 0)}
               autoCapitalize={'none'}
             />
+            <CloseButtonCoord>
+              {email && (
+                <AntDesign
+                  name="closecircle"
+                  color="grey"
+                  size={16}
+                  onPress={onResetEmail}
+                />
+              )}
+            </CloseButtonCoord>
           </View>
           <View style={styles.rowstyle}>
             <Input
-              ref={ref_input[1]}
-              onSubmitEditing={(text) => focusNext(1)}
+              value={password}
+              onChangeText={onChangePassword}
+              ref={ref_input[2]}
+              onSubmitEditing={(text) => focusNext(2)}
               // onKeyPress={(e) => focusPrev(e.nativeEvent.key, 2)}
               onChangeText={onChangePassword}
               autoCorrect={false}
-              leftIcon={{ type: 'antdesign', name: 'key' }}
+              leftIcon={{
+                type: 'antdesign',
+                name: 'key',
+              }}
               rightIcon={{
                 type: 'antdesign',
                 name: isSecureText ? 'eye' : 'eyeo',
@@ -116,6 +135,16 @@ function LogInForm({ route, navigation }) {
               autoCapitalize={'none'}
               secureTextEntry={isSecureText}
             />
+            <CloseButtonCoord>
+              {password && (
+                <AntDesign
+                  name="closecircle"
+                  color="grey"
+                  size={16}
+                  onPress={onResetPassword}
+                />
+              )}
+            </CloseButtonCoord>
           </View>
           <View>
             {misMatchError && (

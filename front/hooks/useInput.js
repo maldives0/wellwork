@@ -1,9 +1,12 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 const useInput = (initialValue) => {
   const [value, setValue] = useState(initialValue);
-  const onChangeText = (text) => {
+  const onChangeText = useCallback((text) => {
     setValue(text);
-  };
-  return [value, onChangeText, setValue];
+  }, []);
+  const onResetText = useCallback(() => {
+    setValue('');
+  }, []);
+  return [value, onChangeText, onResetText, setValue];
 };
 export default useInput;
