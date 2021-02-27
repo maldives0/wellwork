@@ -1,42 +1,27 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import {
   StyleSheet,
   SafeAreaView,
   View,
   Text,
-  KeyboardAvoidingView,
   TouchableWithoutFeedback,
   Keyboard,
-  Platform,
 } from 'react-native';
 import { Input } from 'react-native-elements';
 import axios from 'axios';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import useInput from '../../hooks/useInput';
-import GoToButton from '../../Components/GoToButton';
-import { BasicButton, CloseButtonCoord } from '../../Components/BasicStyles';
-import KakaoLogins, { KAKAO_AUTH_TYPES } from '@react-native-seoul/kakao-login';
-import AntDesign from 'react-native-vector-icons/AntDesign';
-if (!KakaoLogins) {
-  console.error('Module is Not Linked');
-}
-const logCallback = (log, callback) => {
-  console.log(log);
-  callback;
-};
-const TOKEN_EMPTY = 'token has not fetched';
-const PROFILE_EMPTY = {
-  id: 'profile has not fetched',
-  email: 'profile has not fetched',
-  profile_image_url: '',
-};
 
-function LogInForm({ route, navigation }) {
+import useInput from '../../hooks/useInput';
+import { BasicButton, CloseButtonCoord } from '../../Components/BasicStyles';
+import AuthInput from '../../Components/AuthInput';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+
+function RegisterEmail({ route, navigation }) {
   const ref_input = [];
   ref_input[0] = useRef();
   ref_input[1] = useRef();
-  let scroll = useRef();
-
+  ref_input[2] = useRef();
+  ref_input[3] = useRef();
   const focusNext = (index) => {
     if (index < ref_input.length - 1) {
       ref_input[index + 1].current.focus();
@@ -45,71 +30,79 @@ function LogInForm({ route, navigation }) {
       ref_input[index].current.blur();
     }
   };
-  const _scrollToInput = (reactNode) => {
-    // Add a 'scroll' ref to your ScrollView
-    this.scroll.props.scrollToFocusedInput(reactNode);
+  const focusPrev = (key, index) => {
+    if (key === 'Backspace' && index !== 0) {
+      ref_input[index - 1].current.focus();
+    }
   };
 
   const [email, onChangeEmail, onResetEmail, setEmail] = useInput('');
-
+  const [nickname, onChangeNickname, onResetNickname, setNickname] = useInput(
+    '',
+  );
   const [password, onChangePassword, onResetPassword, setPassword] = useInput(
     '',
   );
-  const [misMatchError, setMisMatchError] = useState(false);
+  const [
+    passwordCheck,
+    onChangePasswordCheck,
+    onResetPasswordCheck,
+    setPasswordCheck,
+  ] = useInput('');
+
+  const [loginLoading, setLoginLoading] = useState(false);
+  const [errorEmail, setErrorEmail] = useState('');
+  const [errorNickname, setErrorNickname] = useState('');
+  const [errorPassword, setErrorPassword] = useState('');
+  const [errorPasswordCheck, setErrorPasswordCheck] = useState('');
   const [isSecureText, setIsSecureText] = useState(true);
   const [isResetText, setIsResetText] = useState(false);
-
   const onSubmit = async () => {
+    setErrorEmail('');
+    setErrorNickname('');
+    setErrorPassword('');
+    setErrorPasswordCheck('');
+    const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if (!email || !email.trim() || !emailRegex.test(email)) {
+      return setErrorEmail('유효하지 않은 이메일입니다.');
+    }
+    if (!nickname || !nickname.trim()) {
+      return setErrorNickname('닉네임을 입력해 주세요.');
+    }
+    if (!password || !password.trim()) {
+      return setErrorPassword('패스워드를 입력해 주세요.');
+    }
+    if (password !== passwordCheck) {
+      return setErrorPasswordCheck('입력하신 비밀번호와 일치하지 않습니다.');
+    }
     try {
+      // console.warn(email, nickname, password);
+
       setEmail('');
+      setNickname('');
       setPassword('');
+      setPasswordCheck('');
     } catch (err) {
       console.dir(err);
     }
   };
-  const kakaoLogin = () => {
-    logCallback('Login Start', setLoginLoading(true));
 
-    KakaoLogins.login([KAKAO_AUTH_TYPES.Talk, KAKAO_AUTH_TYPES.Account])
-      .then((result) => {
-        setToken(result.accessToken);
-        logCallback(
-          `Login Finished:${JSON.stringify(result)}`,
-          setLoginLoading(false),
-        );
-      })
-      .catch((err) => {
-        if (err.code === 'E_CANCELLED_OPERATION') {
-          logCallback(`Login Cancelled:${err.message}`, setLoginLoading(false));
-        } else {
-          logCallback(
-            `Login Failed:${err.code} ${err.message}`,
-            setLoginLoading(false),
-          );
-        }
-      });
-  };
   return (
     <SafeAreaView style={styles.container}>
       <KeyboardAwareScrollView
         contentContainerStyle={{ height: -100 }}
-        innerRef={(ref) => {
-          scroll = ref;
-        }}
-        // scrollEnabled={false}
+        scrollEnabled={false}
       >
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <View style={styles.formLayout}>
             <View style={styles.rowstyle}>
               <Input
-                onFocus={(event) => {
-                  // `bind` the function if you're using ES6 classes
-                  _scrollToInput(ReactNative.findNodeHandle(event.target));
-                }}
                 value={email}
                 onChangeText={onChangeEmail}
                 keyboardType={'email-address'}
                 autoCorrect={false}
+                autoFocus={true}
+                errorMessage={errorEmail}
                 leftIcon={{
                   type: 'antdesign',
                   name: 'user',
@@ -117,8 +110,6 @@ function LogInForm({ route, navigation }) {
                 placeholder="이메일"
                 ref={ref_input[0]}
                 onSubmitEditing={(text) => focusNext(0)}
-                clearTextOnFocus={true}
-                onFocus={() => setEmail('')}
                 // onKeyPress={(e) => focusPrev(e.nativeEvent.key, 0)}
                 autoCapitalize={'none'}
               />
@@ -135,6 +126,32 @@ function LogInForm({ route, navigation }) {
             </View>
             <View style={styles.rowstyle}>
               <Input
+                ref={ref_input[1]}
+                onSubmitEditing={(text) => focusNext(1)}
+                // onKeyPress={(e) => focusPrev(e.nativeEvent.key, 1)}
+                value={nickname}
+                onChangeText={onChangeNickname}
+                autoCapitalize={'words'}
+                errorMessage={errorNickname}
+                placeholder="닉네임"
+                leftIcon={{
+                  type: 'antdesign',
+                  name: 'smileo',
+                }}
+              />
+              <CloseButtonCoord>
+                {nickname && (
+                  <AntDesign
+                    name="closecircle"
+                    color="grey"
+                    size={16}
+                    onPress={onResetNickname}
+                  />
+                )}
+              </CloseButtonCoord>
+            </View>
+            <View style={styles.rowstyle}>
+              <Input
                 value={password}
                 onChangeText={onChangePassword}
                 ref={ref_input[2]}
@@ -142,6 +159,7 @@ function LogInForm({ route, navigation }) {
                 // onKeyPress={(e) => focusPrev(e.nativeEvent.key, 2)}
                 onChangeText={onChangePassword}
                 autoCorrect={false}
+                errorMessage={errorPassword}
                 leftIcon={{
                   type: 'antdesign',
                   name: 'key',
@@ -166,28 +184,41 @@ function LogInForm({ route, navigation }) {
                 )}
               </CloseButtonCoord>
             </View>
-            <View>
-              {misMatchError && (
-                <Text style={styles.buttonText}>
-                  '이메일 또는 비밀번호가 일치하지 않습니다.'
-                </Text>
-              )}
-            </View>
-            <View style={styles.buttonAreaLayout}>
-              <BasicButton onPress={onSubmit}>
-                <Text style={styles.buttonText}>로그인</Text>
-              </BasicButton>
-            </View>
             <View style={styles.rowstyle}>
-              <Text style={styles.registerInfo}>아직 회원이 아니신가요?</Text>
-              <GoToButton screenName="회원가입하기" />
+              <Input
+                ref={ref_input[3]}
+                onSubmitEditing={(text) => focusNext(3)}
+                // onKeyPress={(e) => focusPrev(e.nativeEvent.key, 3)}
+                value={passwordCheck}
+                onChangeText={onChangePasswordCheck}
+                autoCorrect={false}
+                errorMessage={errorPasswordCheck}
+                leftIcon={{ type: 'antdesign', name: 'key' }}
+                rightIcon={{
+                  type: 'antdesign',
+                  name: isSecureText ? 'eye' : 'eyeo',
+                  onPress: () => setIsSecureText((prev) => !prev),
+                }}
+                placeholder="비밀번호 확인하기"
+                autoCapitalize={'none'}
+                secureTextEntry={isSecureText}
+              />
+              <CloseButtonCoord>
+                {passwordCheck && (
+                  <AntDesign
+                    name="closecircle"
+                    color="grey"
+                    size={16}
+                    onPress={onResetPasswordCheck}
+                  />
+                )}
+              </CloseButtonCoord>
             </View>
-            <View>
-              <Text style={styles.anotherInfo}>다른 방식으로 로그인하기</Text>
-              <View style={styles.rowstyle}>
-                <GoToButton screenName="휴대폰번호" />
-                <GoToButton screenName="카카오" />
-              </View>
+
+            <View style={styles.buttonAreaLayout}>
+              <BasicButton type="submit" onPress={onSubmit}>
+                <Text style={styles.buttonText}>가입하기</Text>
+              </BasicButton>
             </View>
           </View>
         </TouchableWithoutFeedback>
@@ -199,20 +230,15 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    // justifyContent: 'center',
+
     padding: 16,
   },
   formLayout: {
     padding: 26,
-    flex: 1,
-
     justifyContent: 'center',
+    flex: 1,
   },
 
-  inputLayout: {
-    padding: 10,
-    fontSize: 20,
-  },
   registerInfo: {
     fontSize: 16,
     textAlign: 'center',
@@ -237,6 +263,7 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 20,
   },
+
   btnKakaoLogin: {
     height: 48,
     width: 240,
@@ -247,4 +274,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LogInForm;
+export default RegisterEmail;

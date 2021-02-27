@@ -1,227 +1,23 @@
-import React, { useState, useRef, useEffect, useCallback } from 'react';
-import {
-  StyleSheet,
-  SafeAreaView,
-  View,
-  Text,
-  KeyboardAvoidingView,
-  TextInput,
-} from 'react-native';
-import { Input } from 'react-native-elements';
-import axios from 'axios';
+import React from 'react';
+import { StyleSheet, SafeAreaView, View, Text } from 'react-native';
 
-import useInput from '../../hooks/useInput';
-import { BasicButton, CloseButtonCoord } from '../../Components/BasicStyles';
-import AuthInput from '../../Components/AuthInput';
-import AntDesign from 'react-native-vector-icons/AntDesign';
+import GoToButton from '../../Components/GoToButton';
 
 function RegisterForm({ route, navigation }) {
-  const ref_input = [];
-  ref_input[0] = useRef();
-  ref_input[1] = useRef();
-  ref_input[2] = useRef();
-  ref_input[3] = useRef();
-  const focusNext = (index) => {
-    if (index < ref_input.length - 1) {
-      ref_input[index + 1].current.focus();
-    }
-    if (index == ref_input.length - 1) {
-      ref_input[index].current.blur();
-    }
-  };
-  const focusPrev = (key, index) => {
-    if (key === 'Backspace' && index !== 0) {
-      ref_input[index - 1].current.focus();
-    }
-  };
-
-  const [email, onChangeEmail, onResetEmail, setEmail] = useInput('');
-  const [nickname, onChangeNickname, onResetNickname, setNickname] = useInput(
-    '',
-  );
-  const [password, onChangePassword, onResetPassword, setPassword] = useInput(
-    '',
-  );
-  const [
-    passwordCheck,
-    onChangePasswordCheck,
-    onResetPasswordCheck,
-    setPasswordCheck,
-  ] = useInput('');
-
-  const [loginLoading, setLoginLoading] = useState(false);
-  const [errorEmail, setErrorEmail] = useState('');
-  const [errorNickname, setErrorNickname] = useState('');
-  const [errorPassword, setErrorPassword] = useState('');
-  const [errorPasswordCheck, setErrorPasswordCheck] = useState('');
-  const [isSecureText, setIsSecureText] = useState(true);
-  const [isResetText, setIsResetText] = useState(false);
-  const onSubmit = async () => {
-    setErrorEmail('');
-    setErrorNickname('');
-    setErrorPassword('');
-    setErrorPasswordCheck('');
-    const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    if (!email || !email.trim() || !emailRegex.test(email)) {
-      return setErrorEmail('유효하지 않은 이메일입니다.');
-    }
-    if (!nickname || !nickname.trim()) {
-      return setErrorNickname('닉네임을 입력해 주세요.');
-    }
-    if (!password || !password.trim()) {
-      return setErrorPassword('패스워드를 입력해 주세요.');
-    }
-    if (password !== passwordCheck) {
-      return setErrorPasswordCheck('입력하신 비밀번호와 일치하지 않습니다.');
-    }
-    try {
-      // console.warn(email, nickname, password);
-
-      setEmail('');
-      setNickname('');
-      setPassword('');
-      setPasswordCheck('');
-    } catch (err) {
-      console.dir(err);
-    }
-  };
-
   return (
     <SafeAreaView style={styles.container}>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'position'}
-        style={styles.container}
-        contentContainerStyle={{ flex: 1 }}
-        keyboardVerticalOffset={-550}
-      >
+      <View>
         <View style={styles.rowstyle}>
-          <Input
-            value={email}
-            onChangeText={onChangeEmail}
-            keyboardType={'email-address'}
-            autoCorrect={false}
-            autoFocus={true}
-            errorMessage={errorEmail}
-            leftIcon={{
-              type: 'antdesign',
-              name: 'user',
-            }}
-            placeholder="이메일"
-            ref={ref_input[0]}
-            onSubmitEditing={(text) => focusNext(0)}
-            clearTextOnFocus={true}
-            onFocus={() => setEmail('')}
-            // onKeyPress={(e) => focusPrev(e.nativeEvent.key, 0)}
-            autoCapitalize={'none'}
-          />
-          <CloseButtonCoord>
-            {email && (
-              <AntDesign
-                name="closecircle"
-                color="grey"
-                size={16}
-                onPress={onResetEmail}
-              />
-            )}
-          </CloseButtonCoord>
+          <Text style={styles.registerInfo}>아직 회원이 아니신가요?</Text>
+          <GoToButton screenName="이메일로 가입하기" />
         </View>
-        <View style={styles.rowstyle}>
-          <Input
-            ref={ref_input[1]}
-            onSubmitEditing={(text) => focusNext(1)}
-            // onKeyPress={(e) => focusPrev(e.nativeEvent.key, 1)}
-            value={nickname}
-            onChangeText={onChangeNickname}
-            autoCapitalize={'words'}
-            errorMessage={errorNickname}
-            placeholder="닉네임"
-            leftIcon={{
-              type: 'antdesign',
-              name: 'smileo',
-            }}
-          />
-          <CloseButtonCoord>
-            {nickname && (
-              <AntDesign
-                name="closecircle"
-                color="grey"
-                size={16}
-                onPress={onResetNickname}
-              />
-            )}
-          </CloseButtonCoord>
+        <View>
+          <Text style={styles.anotherInfo}>다른 방식으로 로그인하기</Text>
+          <View style={styles.rowstyle}>
+            <GoToButton screenName="휴대폰번호로 가입하기" />
+          </View>
         </View>
-        <View style={styles.rowstyle}>
-          <Input
-            value={password}
-            onChangeText={onChangePassword}
-            ref={ref_input[2]}
-            onSubmitEditing={(text) => focusNext(2)}
-            // onKeyPress={(e) => focusPrev(e.nativeEvent.key, 2)}
-            onChangeText={onChangePassword}
-            autoCorrect={false}
-            errorMessage={errorPassword}
-            leftIcon={{
-              type: 'antdesign',
-              name: 'key',
-            }}
-            rightIcon={{
-              type: 'antdesign',
-              name: isSecureText ? 'eye' : 'eyeo',
-              onPress: () => setIsSecureText((prev) => !prev),
-            }}
-            placeholder="비밀번호"
-            autoCapitalize={'none'}
-            secureTextEntry={isSecureText}
-          />
-          <CloseButtonCoord>
-            {password && (
-              <AntDesign
-                name="closecircle"
-                color="grey"
-                size={16}
-                onPress={onResetPassword}
-              />
-            )}
-          </CloseButtonCoord>
-        </View>
-        <View style={styles.rowstyle}>
-          <Input
-            ref={ref_input[3]}
-            onSubmitEditing={(text) => focusNext(3)}
-            // onKeyPress={(e) => focusPrev(e.nativeEvent.key, 3)}
-            value={passwordCheck}
-            onChangeText={onChangePasswordCheck}
-            autoCorrect={false}
-            errorMessage={errorPasswordCheck}
-            leftIcon={{ type: 'antdesign', name: 'key' }}
-            rightIcon={{
-              type: 'antdesign',
-              name: isSecureText ? 'eye' : 'eyeo',
-              onPress: () => setIsSecureText((prev) => !prev),
-            }}
-            placeholder="비밀번호 확인하기"
-            autoCapitalize={'none'}
-            secureTextEntry={isSecureText}
-          />
-          <CloseButtonCoord>
-            {passwordCheck && (
-              <AntDesign
-                name="closecircle"
-                color="grey"
-                size={16}
-                onPress={onResetPasswordCheck}
-              />
-            )}
-          </CloseButtonCoord>
-        </View>
-
-        <View style={styles.buttonAreaLayout}>
-          <BasicButton type="submit" onPress={onSubmit}>
-            <Text style={styles.buttonText}>가입하기</Text>
-          </BasicButton>
-        </View>
-      </KeyboardAvoidingView>
+      </View>
     </SafeAreaView>
   );
 }
@@ -229,16 +25,20 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
+    // justifyContent: 'center',
     padding: 16,
   },
-  scrollView: {
+  formLayout: {
     padding: 26,
     flex: 1,
-    alignItems: 'center',
+
     justifyContent: 'center',
   },
 
+  inputLayout: {
+    padding: 10,
+    fontSize: 20,
+  },
   registerInfo: {
     fontSize: 16,
     textAlign: 'center',
@@ -263,7 +63,6 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 20,
   },
-
   btnKakaoLogin: {
     height: 48,
     width: 240,

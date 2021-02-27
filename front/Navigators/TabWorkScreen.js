@@ -1,20 +1,20 @@
-import React, { useState, useEffect } from 'react';
-import { SafeAreaView, View, Text, StyleSheet, Platform } from 'react-native';
-import { Stopwatch } from 'react-native-stopwatch-timer';
-import { BasicButton } from '../Components/BasicStyles';
-import AntDesign from 'react-native-vector-icons/AntDesign';
-import DatePicker from '../Components/DatePicker';
-import SignInTimePicker from '../Components/SignInTimePicker';
-import SignOutTimePicker from '../Components/SignOutTimePicker';
-import moment from 'moment';
-import 'moment/locale/ko';
-import 'moment-timezone';
-import { createStackNavigator } from '@react-navigation/stack';
-import LogoTitle from '../Components/LogoTitle';
+import React, { useState, useEffect } from "react";
+import { SafeAreaView, View, Text, StyleSheet, Platform } from "react-native";
+import { Stopwatch } from "react-native-stopwatch-timer";
+import { BasicButton } from "../Components/BasicStyles";
+import AntDesign from "react-native-vector-icons/AntDesign";
+import DatePicker from "../Components/DatePicker";
+import SignInTimePicker from "../Components/SignInTimePicker";
+import SignOutTimePicker from "../Components/SignOutTimePicker";
+import moment from "moment";
+import "moment/locale/ko";
+import "moment-timezone";
+import { createStackNavigator } from "@react-navigation/stack";
+import LogoTitle from "../Components/LogoTitle";
 
 const TabWorkScreen = ({ navigation, route }) => {
-  moment.locale('ko');
-  moment.tz.setDefault('Asia/Seoul');
+  moment.locale("ko");
+  moment.tz.setDefault("Asia/Seoul");
   const [isStopwatchStart, setIsStopwatchStart] = useState(false);
   const [resetStopwatch, setResetStopwatch] = useState(false);
   const [isSignIn, setIsSignIn] = useState(false);
@@ -28,7 +28,7 @@ const TabWorkScreen = ({ navigation, route }) => {
   return (
     <SafeAreaView style={styles.container}>
       <LogoTitle />
-      <View>
+      <View style={styles.viewContainer}>
         <View style={styles.datePickerLayout}>
           <DatePicker />
         </View>
@@ -115,13 +115,17 @@ const TabWorkScreen = ({ navigation, route }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  viewContainer: {
+    flex: 1,
+    justifyContent: "center",
   },
   datePickerLayout: {
     ...Platform.select({
       ios: {
-        paddingTop: 6,
+        paddingBottom: 30,
       },
       android: {
         padding: 6,
@@ -129,33 +133,33 @@ const styles = StyleSheet.create({
     }),
   },
   timePickerLayout: {
-    borderColor: '#348F50',
-    borderStyle: 'solid',
+    borderColor: "#348F50",
+    borderStyle: "solid",
     borderTopWidth: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
     padding: 26,
   },
   viewLayout: {
-    borderColor: '#348F50',
-    borderStyle: 'solid',
+    borderColor: "#348F50",
+    borderStyle: "solid",
     borderTopWidth: 1,
     marginBottom: 16,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
   title: {
-    textAlign: 'center',
+    textAlign: "center",
     fontSize: 25,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginTop: 36,
     marginBottom: 16,
   },
   buttonText: {
-    textAlign: 'center',
+    textAlign: "center",
     fontSize: 20,
-    color: '#fff',
+    color: "#fff",
   },
 });
 
@@ -163,13 +167,13 @@ const options = {
   container: {
     padding: 5,
     borderRadius: 5,
-    width: '90%',
-    alignItems: 'center',
+    width: "90%",
+    alignItems: "center",
     marginBottom: 16,
   },
   text: {
     fontSize: 50,
-    color: '#000',
+    color: "#000",
     ...Platform.select({
       ios: {
         marginBottom: 20,

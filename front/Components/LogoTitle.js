@@ -1,13 +1,13 @@
-import React from 'react';
-import { StyleSheet, Image, Text, SafeAreaView } from 'react-native';
+import React from "react";
+import { StyleSheet, Image, Text, SafeAreaView } from "react-native";
 
 const LogoTitle = () => {
   return (
     <SafeAreaView style={styles.logoTitle}>
       <Image
-        source={require('../assets/Logo.png')}
+        source={require("../assets/Logo.png")}
         resizeMode="contain"
-        style={{ height: 60 }}
+        style={{ height: 70 }}
       />
     </SafeAreaView>
   );
@@ -15,12 +15,12 @@ const LogoTitle = () => {
 
 const styles = StyleSheet.create({
   logoTitle: {
-    width: '100%',
-    flexDirection: 'row',
-    alignContent: 'center',
-    justifyContent: 'center',
+    width: "100%",
+    flexDirection: "row",
+    alignContent: "center",
+    justifyContent: "center",
     padding: 5,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
   },
 });
 
