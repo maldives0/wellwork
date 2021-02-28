@@ -18,8 +18,7 @@ import useInput from '../../hooks/useInput';
 function OTPLoginForm({ route, navigation }) {
   const Root_URL =
     'https://us-central1-one-time-password-24b66.cloudfunctions.net';
-  // const phone = route?.params?.phone;
-  const phone = '01055002288';
+  const phone = route?.params?.phone;
 
   const [code, onChangeCode, onResetCode, setCode] = useInput('');
 
@@ -30,16 +29,15 @@ function OTPLoginForm({ route, navigation }) {
       if (!code || !code.trim()) {
         return setCodeErrorMessage('코드번호를 다시 확인해주세요.');
       }
-      console.log(phone, code);
+
       let { data } = await axios.post(`${Root_URL}/verifyOneTimePassword`, {
         phone: phone,
         code: code,
       });
-      console.log(data.token);
 
       auth().signInWithCustomToken(data.token);
       Alert.alert('인증이 완료되었습니다.');
-      // navigation.navigate('프로필', { phone });
+      navigation.navigate('프로필', { phone: phone });
     } catch (err) {
       console.dir(err);
       console.error(err);

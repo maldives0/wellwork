@@ -34,7 +34,7 @@ function OTPForm({ route, navigation }) {
       await axios.post(`${Root_URL}/requestOneTimePassword`, {
         phone: phone,
       });
-      navigation.navigate('OTPLoginForm', { phone });
+      navigation.navigate('확인코드 입력하기', { phone });
     } catch (err) {
       console.dir(err);
       console.error(err);
