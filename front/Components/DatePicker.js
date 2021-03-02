@@ -5,15 +5,13 @@ import {
   View,
   Text,
   Platform,
-} from "react-native";
-import DateTimePickerModal from "react-native-modal-datetime-picker";
-import React, { useState } from "react";
+} from 'react-native';
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
+import React, { useState } from 'react';
 
-import moment from "moment";
-import "moment/locale/ko";
+import dayjs from 'dayjs';
 
 const Calender = () => {
-  // moment.locale('ko');
   const [date, setDate] = useState(new Date());
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
@@ -39,7 +37,9 @@ const Calender = () => {
             showDatePicker();
           }}
         >
-          <Text style={styles.buttonText}>{moment.utc(date).format("LL")}</Text>
+          <Text style={styles.buttonText}>
+            {dayjs(date).format('YYYY년 MM월 DD일')}
+          </Text>
         </TouchableOpacity>
 
         <DateTimePickerModal
@@ -55,9 +55,9 @@ const Calender = () => {
 
 const styles = StyleSheet.create({
   buttonText: {
-    textAlign: "center",
+    textAlign: 'center',
     fontSize: 35,
-    textAlignVertical: "center",
+    textAlignVertical: 'center',
   },
   infoText: {},
 

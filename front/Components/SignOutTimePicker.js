@@ -1,20 +1,21 @@
-import {TouchableOpacity, StyleSheet, View, Text, Platform} from 'react-native';
-import DateTimePickerModal from "react-native-modal-datetime-picker";
-import React, {useState, useEffect} from 'react';
-import moment from 'moment';
-import 'moment/locale/ko';
-import 'moment-timezone';
+import {
+  TouchableOpacity,
+  StyleSheet,
+  View,
+  Text,
+  Platform,
+} from 'react-native';
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
+import React, { useState, useEffect } from 'react';
+import dayjs from 'dayjs';
 
 const SignInTimePicker = (props) => {
-  // moment.locale('ko');
-  // moment.tz.setDefault('Asia/Seoul');
-
   let isWorking = props.isWorking;
   let signOutTime = props.signOutTime;
-  
+
   const [endWorkTime, setEndWorkTime] = useState(signOutTime);
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
- 
+
   useEffect(() => {
     if (signOutTime) {
       setEndWorkTime(props.signOutTime);
@@ -36,26 +37,23 @@ const SignInTimePicker = (props) => {
     hideDatePicker();
   };
 
-    return (
-    <View style={{marginBottom: 16}}>
+  return (
+    <View style={{ marginBottom: 16 }}>
       <View>
         <TouchableOpacity
           style={styles.buttonLayout}
           onPress={() => {
             showDatePicker();
-          }}>        
-          <Text style={styles.typeInfo}>
-            {props.type}
-            </Text>
-            <Text style={styles.dateTimeText}>
-            {moment(
-                isWorking
-                  ? endWorkTime.getTime() + 9 * 60 * 60 * 1000
-                  : endWorkTime.getTime(),
-              )
-                .utc(endWorkTime)
-                .format('LT')}
-            </Text>      
+          }}
+        >
+          <Text style={styles.typeInfo}>{props.type}</Text>
+          <Text style={styles.dateTimeText}>
+            {dayjs(
+              isWorking
+                ? endWorkTime.getTime() + 9 * 60 * 60 * 1000
+                : endWorkTime.getTime(),
+            ).format('A hh:mm')}
+          </Text>
         </TouchableOpacity>
       </View>
       <DateTimePickerModal
@@ -63,12 +61,12 @@ const SignInTimePicker = (props) => {
         mode="time"
         onConfirm={handleConfirm}
         onCancel={hideDatePicker}
-      />    
+      />
     </View>
   );
 };
 
-const styles = StyleSheet.create({ 
+const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
@@ -76,25 +74,24 @@ const styles = StyleSheet.create({
   },
   buttonLayout: {
     ...Platform.select({
-          android:{
+      android: {
         marginTop: 16,
         flex: 2,
         padding: 16,
         justifyContent: 'center',
         alignItems: 'center',
-      }
-    }),   
+      },
+    }),
   },
-  typeInfo: {    
+  typeInfo: {
     textAlign: 'center',
     fontSize: 15,
     textAlignVertical: 'center',
-  
-     },
+  },
   dateTimeText: {
     fontSize: 34,
     fontWeight: 'normal',
-    padding:16
+    padding: 16,
   },
   viewText: {
     textAlign: 'center',

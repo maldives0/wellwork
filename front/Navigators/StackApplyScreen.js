@@ -3,7 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import ApplyHome from '../Screens/Apply/ApplyHome';
 import ApplyForm from '../Screens/Apply/ApplyForm';
-import LogoTitle from '../Components/LogoTitle';
+
 const Stack = createStackNavigator();
 
 function StackApplyScreen() {

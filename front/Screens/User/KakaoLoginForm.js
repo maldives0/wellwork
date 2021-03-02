@@ -20,7 +20,7 @@ const PROFILE_EMPTY = {
   profile_image_url: '',
 };
 
-export default function App() {
+function KakaoLoginForm() {
   const [loginLoading, setLoginLoading] = useState(false);
   const [logoutLoading, setLogoutLoading] = useState(false);
   const [profileLoading, setProfileLoading] = useState(false);
@@ -208,3 +208,4 @@ const styles = StyleSheet.create({
     color: '#3d3d3d',
   },
 });
+export default KakaoLoginForm;

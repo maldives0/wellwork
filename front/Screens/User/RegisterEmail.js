@@ -6,6 +6,7 @@ import {
   Text,
   TouchableWithoutFeedback,
   Keyboard,
+  Dimensions,
 } from 'react-native';
 import { Input } from 'react-native-elements';
 import axios from 'axios';
@@ -15,24 +16,20 @@ import useInput from '../../hooks/useInput';
 import { BasicButton, CloseButtonCoord } from '../../Components/BasicStyles';
 import AuthInput from '../../Components/AuthInput';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-
-function RegisterEmail({ route, navigation }) {
+const window = Dimensions.get('window');
+function RegisterEmail({ route, navigation, props }) {
   const ref_input = [];
   ref_input[0] = useRef();
   ref_input[1] = useRef();
   ref_input[2] = useRef();
   ref_input[3] = useRef();
+
   const focusNext = (index) => {
     if (index < ref_input.length - 1) {
       ref_input[index + 1].current.focus();
     }
     if (index == ref_input.length - 1) {
       ref_input[index].current.blur();
-    }
-  };
-  const focusPrev = (key, index) => {
-    if (key === 'Backspace' && index !== 0) {
-      ref_input[index - 1].current.focus();
     }
   };
 
@@ -88,11 +85,16 @@ function RegisterEmail({ route, navigation }) {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <KeyboardAwareScrollView
-        contentContainerStyle={{ height: -100 }}
-        scrollEnabled={false}
-      >
+    <KeyboardAwareScrollView
+      extraHeight={300}
+      enableOnAndroid={true}
+      enableAutomaticScroll={Platform.OS === 'ios'}
+      contentContainerStyle={{ height: -30 }}
+      resetScrollToCoords={{ x: 0, y: 0 }}
+      scrollEnabled={true}
+      enableAutomaticScroll={true}
+    >
+      <SafeAreaView style={styles.container}>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <View style={styles.formLayout}>
             <View style={styles.rowstyle}>
@@ -110,7 +112,6 @@ function RegisterEmail({ route, navigation }) {
                 placeholder="이메일"
                 ref={ref_input[0]}
                 onSubmitEditing={(text) => focusNext(0)}
-                // onKeyPress={(e) => focusPrev(e.nativeEvent.key, 0)}
                 autoCapitalize={'none'}
               />
               <CloseButtonCoord>
@@ -128,7 +129,6 @@ function RegisterEmail({ route, navigation }) {
               <Input
                 ref={ref_input[1]}
                 onSubmitEditing={(text) => focusNext(1)}
-                // onKeyPress={(e) => focusPrev(e.nativeEvent.key, 1)}
                 value={nickname}
                 onChangeText={onChangeNickname}
                 autoCapitalize={'words'}
@@ -156,7 +156,6 @@ function RegisterEmail({ route, navigation }) {
                 onChangeText={onChangePassword}
                 ref={ref_input[2]}
                 onSubmitEditing={(text) => focusNext(2)}
-                // onKeyPress={(e) => focusPrev(e.nativeEvent.key, 2)}
                 onChangeText={onChangePassword}
                 autoCorrect={false}
                 errorMessage={errorPassword}
@@ -188,7 +187,6 @@ function RegisterEmail({ route, navigation }) {
               <Input
                 ref={ref_input[3]}
                 onSubmitEditing={(text) => focusNext(3)}
-                // onKeyPress={(e) => focusPrev(e.nativeEvent.key, 3)}
                 value={passwordCheck}
                 onChangeText={onChangePasswordCheck}
                 autoCorrect={false}
@@ -222,21 +220,18 @@ function RegisterEmail({ route, navigation }) {
             </View>
           </View>
         </TouchableWithoutFeedback>
-      </KeyboardAwareScrollView>
-    </SafeAreaView>
+      </SafeAreaView>
+    </KeyboardAwareScrollView>
   );
 }
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    alignItems: 'center',
-
-    padding: 16,
+    height: window.height * 1,
   },
   formLayout: {
-    padding: 26,
-    justifyContent: 'center',
+    padding: 24,
     flex: 1,
+    justifyContent: 'center',
   },
 
   registerInfo: {

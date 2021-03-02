@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Alert, StyleSheet, Text, View } from 'react-native';
 import CalendarPicker from 'react-native-calendar-picker';
-import moment from 'moment';
-import { BasicButton, BorderButton } from './BasicStyles';
+import dayjs from 'dayjs';
+import { BasicButton } from './BasicStyles';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 const ApplyCalendarPicker = () => {
   const [selectedStartDate, setSelectedStartDate] = useState(null);
@@ -10,7 +10,7 @@ const ApplyCalendarPicker = () => {
   // const [isReset, setIsReset] = useState(false);
   const startDate = selectedStartDate ? selectedStartDate.toString() : '';
   const endDate = selectedEndDate ? selectedEndDate.toString() : '';
-  const result = (res) => moment(res).format('LL');
+  const result = (res) => dayjs(res).format('LL');
 
   const onDateChange = (date, type) => {
     if (type === 'END_DATE') {

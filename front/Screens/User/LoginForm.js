@@ -8,34 +8,21 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   Platform,
+  Dimensions,
 } from 'react-native';
 import { Input } from 'react-native-elements';
 import axios from 'axios';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+
 import useInput from '../../hooks/useInput';
 import GoToButton from '../../Components/GoToButton';
 import { BasicButton, CloseButtonCoord } from '../../Components/BasicStyles';
-import KakaoLogins, { KAKAO_AUTH_TYPES } from '@react-native-seoul/kakao-login';
+
 import AntDesign from 'react-native-vector-icons/AntDesign';
-if (!KakaoLogins) {
-  console.error('Module is Not Linked');
-}
-const logCallback = (log, callback) => {
-  console.log(log);
-  callback;
-};
-const TOKEN_EMPTY = 'token has not fetched';
-const PROFILE_EMPTY = {
-  id: 'profile has not fetched',
-  email: 'profile has not fetched',
-  profile_image_url: '',
-};
 
 function LogInForm({ route, navigation }) {
   const ref_input = [];
   ref_input[0] = useRef();
   ref_input[1] = useRef();
-  let scroll = useRef();
 
   const focusNext = (index) => {
     if (index < ref_input.length - 1) {
@@ -45,10 +32,6 @@ function LogInForm({ route, navigation }) {
       ref_input[index].current.blur();
     }
   };
-  const _scrollToInput = (reactNode) => {
-    // Add a 'scroll' ref to your ScrollView
-    this.scroll.props.scrollToFocusedInput(reactNode);
-  };
 
   const [email, onChangeEmail, onResetEmail, setEmail] = useInput('');
 
@@ -57,7 +40,6 @@ function LogInForm({ route, navigation }) {
   );
   const [misMatchError, setMisMatchError] = useState(false);
   const [isSecureText, setIsSecureText] = useState(true);
-  const [isResetText, setIsResetText] = useState(false);
 
   const onSubmit = async () => {
     try {
@@ -67,145 +49,108 @@ function LogInForm({ route, navigation }) {
       console.dir(err);
     }
   };
-  const kakaoLogin = () => {
-    logCallback('Login Start', setLoginLoading(true));
 
-    KakaoLogins.login([KAKAO_AUTH_TYPES.Talk, KAKAO_AUTH_TYPES.Account])
-      .then((result) => {
-        setToken(result.accessToken);
-        logCallback(
-          `Login Finished:${JSON.stringify(result)}`,
-          setLoginLoading(false),
-        );
-      })
-      .catch((err) => {
-        if (err.code === 'E_CANCELLED_OPERATION') {
-          logCallback(`Login Cancelled:${err.message}`, setLoginLoading(false));
-        } else {
-          logCallback(
-            `Login Failed:${err.code} ${err.message}`,
-            setLoginLoading(false),
-          );
-        }
-      });
-  };
   return (
     <SafeAreaView style={styles.container}>
-      <KeyboardAwareScrollView
-        contentContainerStyle={{ height: -100 }}
-        innerRef={(ref) => {
-          scroll = ref;
-        }}
-        // scrollEnabled={false}
-      >
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          <View style={styles.formLayout}>
-            <View style={styles.rowstyle}>
-              <Input
-                onFocus={(event) => {
-                  // `bind` the function if you're using ES6 classes
-                  _scrollToInput(ReactNative.findNodeHandle(event.target));
-                }}
-                value={email}
-                onChangeText={onChangeEmail}
-                keyboardType={'email-address'}
-                autoCorrect={false}
-                leftIcon={{
-                  type: 'antdesign',
-                  name: 'user',
-                }}
-                placeholder="이메일"
-                ref={ref_input[0]}
-                onSubmitEditing={(text) => focusNext(0)}
-                clearTextOnFocus={true}
-                onFocus={() => setEmail('')}
-                // onKeyPress={(e) => focusPrev(e.nativeEvent.key, 0)}
-                autoCapitalize={'none'}
-              />
-              <CloseButtonCoord>
-                {email && (
-                  <AntDesign
-                    name="closecircle"
-                    color="grey"
-                    size={16}
-                    onPress={onResetEmail}
-                  />
-                )}
-              </CloseButtonCoord>
-            </View>
-            <View style={styles.rowstyle}>
-              <Input
-                value={password}
-                onChangeText={onChangePassword}
-                ref={ref_input[2]}
-                onSubmitEditing={(text) => focusNext(2)}
-                // onKeyPress={(e) => focusPrev(e.nativeEvent.key, 2)}
-                onChangeText={onChangePassword}
-                autoCorrect={false}
-                leftIcon={{
-                  type: 'antdesign',
-                  name: 'key',
-                }}
-                rightIcon={{
-                  type: 'antdesign',
-                  name: isSecureText ? 'eye' : 'eyeo',
-                  onPress: () => setIsSecureText((prev) => !prev),
-                }}
-                placeholder="비밀번호"
-                autoCapitalize={'none'}
-                secureTextEntry={isSecureText}
-              />
-              <CloseButtonCoord>
-                {password && (
-                  <AntDesign
-                    name="closecircle"
-                    color="grey"
-                    size={16}
-                    onPress={onResetPassword}
-                  />
-                )}
-              </CloseButtonCoord>
-            </View>
-            <View>
-              {misMatchError && (
-                <Text style={styles.buttonText}>
-                  '이메일 또는 비밀번호가 일치하지 않습니다.'
-                </Text>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View style={styles.formLayout}>
+          <View style={styles.rowstyle}>
+            <Input
+              value={email}
+              onChangeText={onChangeEmail}
+              keyboardType={'email-address'}
+              autoCorrect={false}
+              leftIcon={{
+                type: 'antdesign',
+                name: 'user',
+              }}
+              placeholder="이메일"
+              ref={ref_input[0]}
+              onSubmitEditing={(text) => focusNext(0)}
+              clearTextOnFocus={true}
+              onFocus={() => setEmail('')}
+              // onKeyPress={(e) => focusPrev(e.nativeEvent.key, 0)}
+              autoCapitalize={'none'}
+            />
+            <CloseButtonCoord>
+              {email && (
+                <AntDesign
+                  name="closecircle"
+                  color="grey"
+                  size={16}
+                  onPress={onResetEmail}
+                />
               )}
-            </View>
-            <View style={styles.buttonAreaLayout}>
-              <BasicButton onPress={onSubmit}>
-                <Text style={styles.buttonText}>로그인</Text>
-              </BasicButton>
-            </View>
+            </CloseButtonCoord>
+          </View>
+          <View style={styles.rowstyle}>
+            <Input
+              value={password}
+              onChangeText={onChangePassword}
+              ref={ref_input[2]}
+              onSubmitEditing={(text) => focusNext(2)}
+              // onKeyPress={(e) => focusPrev(e.nativeEvent.key, 2)}
+              onChangeText={onChangePassword}
+              autoCorrect={false}
+              leftIcon={{
+                type: 'antdesign',
+                name: 'key',
+              }}
+              rightIcon={{
+                type: 'antdesign',
+                name: isSecureText ? 'eye' : 'eyeo',
+                onPress: () => setIsSecureText((prev) => !prev),
+              }}
+              placeholder="비밀번호"
+              autoCapitalize={'none'}
+              secureTextEntry={isSecureText}
+            />
+            <CloseButtonCoord>
+              {password && (
+                <AntDesign
+                  name="closecircle"
+                  color="grey"
+                  size={16}
+                  onPress={onResetPassword}
+                />
+              )}
+            </CloseButtonCoord>
+          </View>
+          <View>
+            {misMatchError && (
+              <Text style={styles.buttonText}>
+                '이메일 또는 비밀번호가 일치하지 않습니다.'
+              </Text>
+            )}
+          </View>
+          <View style={styles.buttonAreaLayout}>
+            <BasicButton onPress={onSubmit}>
+              <Text style={styles.buttonText}>로그인</Text>
+            </BasicButton>
+          </View>
+          <View style={styles.rowstyle}>
+            <Text style={styles.registerInfo}>아직 회원이 아니신가요?</Text>
+            <GoToButton screenName="회원가입하기" />
+          </View>
+          <View>
+            <Text style={styles.anotherInfo}>다른 방식으로 로그인하기</Text>
             <View style={styles.rowstyle}>
-              <Text style={styles.registerInfo}>아직 회원이 아니신가요?</Text>
-              <GoToButton screenName="회원가입하기" />
-            </View>
-            <View>
-              <Text style={styles.anotherInfo}>다른 방식으로 로그인하기</Text>
-              <View style={styles.rowstyle}>
-                <GoToButton screenName="휴대폰번호" />
-                <GoToButton screenName="카카오" />
-              </View>
+              <GoToButton screenName="휴대폰번호 로그인" />
+              <GoToButton screenName="카카오 로그인" />
             </View>
           </View>
-        </TouchableWithoutFeedback>
-      </KeyboardAwareScrollView>
+        </View>
+      </TouchableWithoutFeedback>
     </SafeAreaView>
   );
 }
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    // justifyContent: 'center',
-    padding: 16,
   },
   formLayout: {
-    padding: 26,
+    padding: 24,
     flex: 1,
-
     justifyContent: 'center',
   },
 

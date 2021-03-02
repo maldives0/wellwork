@@ -1,0 +1,36 @@
+{
+  "user": [
+    {
+      "id": 1,
+      "user_id": "momo@aiskorea.co.kr",
+      "password": "1234",
+      "name": "juyoung",
+      "nickname": "momo",
+      "department": "D",
+      "phone": "010-5500-2288",
+      "join_date": "",
+      "resign_date": "",
+      "profile_image_url": ""
+    }
+  ],
+  "workingTime": [
+    {
+      "worker_id": 1,
+      "signin_at": "",
+      "signout_at": "",
+      "sign_type": "",
+      "is_overtime": "false",
+      "overtime_at": "",
+      "overtime_reason": ""
+    }
+  ],
+  "apply": [
+    {
+      "apply_type": 1,
+      "apply_start_date": "",
+      "apply_end_date": "",
+      "remain_days": 12,
+      "apply_reason": ""
+    }
+  ]
+}
