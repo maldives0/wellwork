@@ -25,6 +25,12 @@ export const CloseButtonCoord = styled.Text`
   top: 16px;
   right: 50px;
 `;
+export const ProfileInfo = styled.Text`
+  font-size: 20px;
+  margin-top: 15px;
+  text-align: center;
+`;
+
 // export const applyColorType = styled.View`
 //   border-radius: 100%;
 //   width: 10px;

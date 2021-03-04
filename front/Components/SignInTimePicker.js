@@ -37,7 +37,7 @@ const SignInTimePicker = (props) => {
   };
 
   return (
-    <View style={{ marginBottom: 16 }}>
+    <View>
       <View>
         <TouchableOpacity
           style={styles.buttonLayout}
@@ -70,9 +70,6 @@ const styles = StyleSheet.create({
   buttonLayout: {
     ...Platform.select({
       android: {
-        marginTop: 16,
-        flex: 2,
-        padding: 16,
         justifyContent: 'center',
         alignItems: 'center',
       },

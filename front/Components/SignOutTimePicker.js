@@ -9,7 +9,7 @@ import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import React, { useState, useEffect } from 'react';
 import dayjs from 'dayjs';
 
-const SignInTimePicker = (props) => {
+const SignOutTimePicker = (props) => {
   let isWorking = props.isWorking;
   let signOutTime = props.signOutTime;
 
@@ -38,7 +38,7 @@ const SignInTimePicker = (props) => {
   };
 
   return (
-    <View style={{ marginBottom: 16 }}>
+    <View>
       <View>
         <TouchableOpacity
           style={styles.buttonLayout}
@@ -75,9 +75,6 @@ const styles = StyleSheet.create({
   buttonLayout: {
     ...Platform.select({
       android: {
-        marginTop: 16,
-        flex: 2,
-        padding: 16,
         justifyContent: 'center',
         alignItems: 'center',
       },
@@ -99,4 +96,4 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
 });
-export default SignInTimePicker;
+export default SignOutTimePicker;

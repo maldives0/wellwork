@@ -7,9 +7,12 @@ module.exports = function (req, res) {
   }
   //format the phone to remove dashes and parens
 
-  const input = String('010-5500-2288').replace(/[^\d]/g, '').substring(1);
+  const input = String(req.body.phone).replace(/[^\d]/g, '').substring(1);
   const phone = `+82${input}`;
 
+  if (admin.auth().getUser(phone)) {
+    return res.status(422).send({ error: '이미 등록된 번호입니다.' });
+  }
   //create a new user account using that phone number
   admin
     .auth()
