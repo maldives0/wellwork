@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   StyleSheet,
   SafeAreaView,
@@ -55,7 +55,7 @@ function LogInForm({ route, navigation }) {
       console.dir(err);
     }
   };
-
+  
   return (
     <SafeAreaView style={styles.container}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -74,8 +74,7 @@ function LogInForm({ route, navigation }) {
               ref={ref_input[0]}
               onSubmitEditing={(text) => focusNext(0)}
               clearTextOnFocus={true}
-              onFocus={() => setEmail('')}
-              // onKeyPress={(e) => focusPrev(e.nativeEvent.key, 0)}
+            
               autoCapitalize={'none'}
             />
             <CloseButtonCoord>
@@ -138,13 +137,10 @@ function LogInForm({ route, navigation }) {
             <Text style={styles.registerInfo}>아직 회원이 아니신가요?</Text>
             <GoToButton screenName="회원가입하기" />
           </View>
-          <View>
-            <Text style={styles.anotherInfo}>다른 방식으로 로그인하기</Text>
-            <View style={styles.rowstyle}>
-              <GoToButton screenName="휴대폰번호 로그인" />
-              <GoToButton screenName="카카오 로그인" />
+          <View style={styles.rowstyle}>
+          <GoToButton screenName="카카오 로그인" />
+              <GoToButton screenName="사용자 정보" />
             </View>
-          </View>
         </View>
       </TouchableWithoutFeedback>
     </SafeAreaView>

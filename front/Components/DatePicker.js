@@ -11,7 +11,7 @@ import React, { useState } from 'react';
 
 import dayjs from 'dayjs';
 
-const Calender = () => {
+const DataPicker = () => {
   const [date, setDate] = useState(new Date());
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
@@ -56,7 +56,7 @@ const Calender = () => {
 const styles = StyleSheet.create({
   buttonText: {
     textAlign: 'center',
-    fontSize: 35,
+    fontSize: 25,
     textAlignVertical: 'center',
   },
   infoText: {},
@@ -65,4 +65,4 @@ const styles = StyleSheet.create({
     padding: 36,
   },
 });
-export default Calender;
+export default DataPicker;

@@ -20,12 +20,13 @@ import useSWR, { mutate } from 'swr';
 import initialUser from '../../assets/store';
 import produce from 'immer';
 
+
 const window = Dimensions.get('window');
 function RegisterEmail({ route, navigation, props }) {
   const { data: userData } = useSWR('globalState', {
     initialData: initialUser,
   });
-  console.log(userData.users);
+  // console.log(userData.users);
   const ref_input = [];
   ref_input[0] = useRef();
   ref_input[1] = useRef();
@@ -62,15 +63,16 @@ function RegisterEmail({ route, navigation, props }) {
   const [errorPasswordCheck, setErrorPasswordCheck] = useState('');
   const [isSecureText, setIsSecureText] = useState(true);
 
-  const onSubmit = async () => {
+  const onSubmit = async (e) => {
+    e.preventDefault();
     setErrorEmail('');
     setErrorNickname('');
     setErrorPassword('');
     setErrorPasswordCheck('');
-    const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    if (!email || !email.trim() || !emailRegex.test(email)) {
-      return setErrorEmail('유효하지 않은 이메일입니다.');
-    }
+    // const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    // if (!email || !email.trim() || !emailRegex.test(email)) {
+    //   return setErrorEmail('유효하지 않은 이메일입니다.');
+    // }
     if (!nickname || !nickname.trim()) {
       return setErrorNickname('닉네임을 입력해 주세요.');
     }
@@ -81,23 +83,24 @@ function RegisterEmail({ route, navigation, props }) {
       return setErrorPasswordCheck('입력하신 비밀번호와 일치하지 않습니다.');
     }
     try {
-      mutate(
-        'globalState',
-        produce((draft) => {
-          console.log('2:', draft.users);
-          // draft.users.push({
-          //   email,
-          //   nickname,
-          //   password,
-          // });
-        }),
-        false,
-      );
+      // mutate(
+      //   'globalState',
+      //   produce((draft) => {
+      //     console.log('2:', draft.push());
+      //     // draft.users.push({
+      //     //   email,
+      //     //   nickname,
+      //     //   password,
+      //     // });
+      //   }),
+      //   false,
+      // );
 
       setEmail('');
       setNickname('');
       setPassword('');
       setPasswordCheck('');
+      navigation.navigate("사용자 정보")
     } catch (err) {
       console.dir(err);
     }
@@ -250,7 +253,7 @@ const styles = StyleSheet.create({
     height: window.height * 1,
   },
   formLayout: {
-    padding: 24,
+    padding: 16,
     flex: 1,
     justifyContent: 'center',
   },
