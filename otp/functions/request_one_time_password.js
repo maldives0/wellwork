@@ -6,7 +6,7 @@ module.exports = function (req, res) {
     return res.status(422).send({ error: '번호를 입력하세요!' });
   }
 
-  const input = String('010-5500-2288').replace(/[^\d]/g, '').substring(1);
+  const input = String(req.body.phone).replace(/[^\d]/g, '').substring(1);
   const phone = `+82${input}`;
   admin
     .auth()

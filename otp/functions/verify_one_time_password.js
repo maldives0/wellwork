@@ -6,7 +6,7 @@ module.exports = function (req, res) {
       .send({ error: '번호와 확인코드가 모두 필요합니다!' });
   }
 
-  const input = String('010-5500-2288').replace(/[^\d]/g, '').substring(1);
+  const input = String(req.body.phone).replace(/[^\d]/g, '').substring(1);
   const phone = `+82${input}`;
   const code = parseInt(req.body.code);
 
