@@ -1,15 +1,21 @@
-import React, { useEffect } from "react";
-import { NavigationContainer } from "@react-navigation/native";
+import React, { useState, useEffect } from 'react';
+import { NavigationContainer } from '@react-navigation/native';
 
-// Navigatiors
-import Main from "./Navigators/Main";
-
-// Screens
+import NavController from './Components/NavController';
+import initialUser from './assets/store';
+import useSWR from 'swr';
 
 const App = () => {
+  const { data: userData, error } = useSWR('globalState', {
+    initialData: initialUser,
+  });
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // useEffect(() => {
+  //   if (userData.me) setIsLoggedIn(true);
+  // }, [userData.me]);
   return (
     <NavigationContainer>
-      <Main />
+      <NavController isLoggedIn={isLoggedIn} />
     </NavigationContainer>
   );
 };

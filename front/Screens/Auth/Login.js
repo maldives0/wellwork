@@ -12,7 +12,9 @@ import {
 } from 'react-native';
 import { Input } from 'react-native-elements';
 import axios from 'axios';
-
+import useSWR, { mutate } from 'swr';
+import initialUser from '../../assets/store';
+import produce from 'immer';
 import useInput from '../../hooks/useInput';
 import GoToButton from '../../Components/GoToButton';
 import { BasicButton, CloseButtonCoord } from '../../Components/BasicStyles';
@@ -20,6 +22,10 @@ import { BasicButton, CloseButtonCoord } from '../../Components/BasicStyles';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
 function LogInForm({ route, navigation }) {
+  const { data: userData, error } = useSWR('globalState', {
+    initialData: initialUser,
+  });
+
   const ref_input = [];
   ref_input[0] = useRef();
   ref_input[1] = useRef();

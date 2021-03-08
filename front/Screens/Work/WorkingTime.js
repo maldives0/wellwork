@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { SafeAreaView, View, Text, StyleSheet, Platform } from 'react-native';
 import { Stopwatch } from 'react-native-stopwatch-timer';
-import { BasicButton } from '../Components/BasicStyles';
+import { BasicButton } from '../../Components/BasicStyles';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import DatePicker from '../Components/DatePicker';
-import SignInTimePicker from '../Components/SignInTimePicker';
-import SignOutTimePicker from '../Components/SignOutTimePicker';
-import LogoTitle from '../Components/LogoTitle';
+import DatePicker from '../../Components/DatePicker';
+import SignInTimePicker from '../../Components/SignInTimePicker';
+import SignOutTimePicker from '../../Components/SignOutTimePicker';
+import LogoTitle from '../../Components/LogoTitle';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ko';
 dayjs.locale('ko');

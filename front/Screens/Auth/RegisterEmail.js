@@ -16,8 +16,16 @@ import useInput from '../../hooks/useInput';
 import { BasicButton, CloseButtonCoord } from '../../Components/BasicStyles';
 import AuthInput from '../../Components/AuthInput';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import useSWR, { mutate } from 'swr';
+import initialUser from '../../assets/store';
+import produce from 'immer';
+
 const window = Dimensions.get('window');
 function RegisterEmail({ route, navigation, props }) {
+  const { data: userData } = useSWR('globalState', {
+    initialData: initialUser,
+  });
+  console.log(userData.users);
   const ref_input = [];
   ref_input[0] = useRef();
   ref_input[1] = useRef();
@@ -53,7 +61,7 @@ function RegisterEmail({ route, navigation, props }) {
   const [errorPassword, setErrorPassword] = useState('');
   const [errorPasswordCheck, setErrorPasswordCheck] = useState('');
   const [isSecureText, setIsSecureText] = useState(true);
-  const [isResetText, setIsResetText] = useState(false);
+
   const onSubmit = async () => {
     setErrorEmail('');
     setErrorNickname('');
@@ -73,7 +81,18 @@ function RegisterEmail({ route, navigation, props }) {
       return setErrorPasswordCheck('입력하신 비밀번호와 일치하지 않습니다.');
     }
     try {
-      // console.warn(email, nickname, password);
+      mutate(
+        'globalState',
+        produce((draft) => {
+          console.log('2:', draft.users);
+          // draft.users.push({
+          //   email,
+          //   nickname,
+          //   password,
+          // });
+        }),
+        false,
+      );
 
       setEmail('');
       setNickname('');
@@ -83,7 +102,9 @@ function RegisterEmail({ route, navigation, props }) {
       console.dir(err);
     }
   };
-
+  // if (!userData) {
+  //   return null;
+  // }
   return (
     <KeyboardAwareScrollView
       extraHeight={300}

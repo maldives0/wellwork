@@ -1,7 +1,7 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import TabNavigation from './TabNavigation';
-import UserDetail from './UserDetail';
+import UserDetail from '../Screens/User/UserDetail';
 
 const MainStackNavigation = createStackNavigator();
 
@@ -13,7 +13,6 @@ const Main = () => {
         component={TabNavigation}
         options={{ headerShown: false }}
       />
-
       <MainStackNavigation.Screen
         name="UserDetail"
         component={UserDetail}

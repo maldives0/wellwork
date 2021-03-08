@@ -1,14 +1,12 @@
 import React from 'react';
+import UserProfile from '../../Components/UserProfile';
 import { View, Text, Image, StyleSheet } from 'react-native';
-const UserProfile = ({ navigation, route }) => {
-  const phone = route?.params?.phone;
-  console.log('phone', phone);
+const UserDetail = ({ navigation, route }) => {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>profile</Text>
-      <Text>{phone}</Text>
+      <UserProfile />
     </View>
   );
 };
 const styles = StyleSheet.create({});
-export default UserProfile;
+export default UserDetail;

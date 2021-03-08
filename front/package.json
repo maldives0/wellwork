@@ -7,8 +7,7 @@
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest",
-    "lint": "eslint .",
-    "fake": "json-server --watch db.json --port 3001"
+    "lint": "eslint ."
   },
   "dependencies": {
     "@emotion/react": "^11.1.5",
@@ -27,6 +26,7 @@
     "axios": "^0.21.1",
     "dayjs": "^1.10.4",
     "gravatar": "^1.8.1",
+    "immer": "^8.0.1",
     "react": "16.13.1",
     "react-native": "0.63.4",
     "react-native-calendar-picker": "^7.0.9",
