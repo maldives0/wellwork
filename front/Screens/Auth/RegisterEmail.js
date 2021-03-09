@@ -16,17 +16,17 @@ import useInput from '../../hooks/useInput';
 import { BasicButton, CloseButtonCoord } from '../../Components/BasicStyles';
 import AuthInput from '../../Components/AuthInput';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import useSWR, { mutate } from 'swr';
+import useSWR from 'swr';
+import fetcher from '../../utils/fetcher'
 import initialUser from '../../assets/store';
 import produce from 'immer';
 
 
 const window = Dimensions.get('window');
 function RegisterEmail({ route, navigation, props }) {
-  const { data: userData } = useSWR('globalState', {
-    initialData: initialUser,
-  });
-  // console.log(userData.users);
+  const { data: userData, mutate:mutateUser,error } = useSWR('http://localhost:3000/api/users', fetcher);
+  console.log('change:',userData)
+
   const ref_input = [];
   ref_input[0] = useRef();
   ref_input[1] = useRef();
@@ -83,18 +83,15 @@ function RegisterEmail({ route, navigation, props }) {
       return setErrorPasswordCheck('입력하신 비밀번호와 일치하지 않습니다.');
     }
     try {
-      // mutate(
-      //   'globalState',
-      //   produce((draft) => {
-      //     console.log('2:', draft.push());
-      //     // draft.users.push({
-      //     //   email,
-      //     //   nickname,
-      //     //   password,
-      //     // });
-      //   }),
-      //   false,
+      // mutate('globalState',
+      //   produce((draft)=>{
+      //     console.log('mutate',draft)
+      //     draft?.users.unshift({name:"hong"})
+      //     return draft
+         
+      //   })
       // );
+      // console.log('2',data);
 
       setEmail('');
       setNickname('');

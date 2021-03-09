@@ -34,71 +34,79 @@ function UserInfo({ route, navigation }) {
 
  
 const onDeptValueChange = useCallback((e)=>{
-    console.log(e)
+
     setSelectedDept(e)
 },[])
   const onSubmit = async () => {
     try {
-        console.log(selectedDate.toString().substr(4, 12))
-      setEmail('');
-      setPassword('');
+        console.log(phone,selectedDept,selectedDate.toString().substr(4, 12),)
+        setPhone('');
+        setSelectedDept(null)
+        setSelectedDate(new Date())
+        navigation.navigate("로그인")
     } catch (err) {
       console.dir(err);
     }
   };
   
   return (
-    <SafeAreaView style={styles.container}>
-       <Container>
-       <Header />
-       <Content>
-      <Form>
-      <Label>전화번호</Label>
-      <Item rounded>
-      
-            <Input value={phone} onChangeText={onChangePhone}/>
-            <CloseButtonCoord>
-                {phone && (
-                  <AntDesign
-                    name="closecircle"
-                    color="grey"
-                    size={16}
-                    onPress={onResetPhone}
-                  />
-                )}
-              </CloseButtonCoord>
-          </Item>
-          <Label>소속 부서</Label>
-            <Picker
-              mode="dropdown"
-              placeholder="소속 부서를 선택해주세요"
-              iosIcon={<AntDesign name="down" />}
-              placeholderStyle={{ color: "#2874F0" }}
-              note={false}
-              selectedValue={selectedDept}
-              onValueChange={onDeptValueChange}
-            >
-              <Picker.Item label="CEO" value="A" />
-              <Picker.Item label="경영" value="B" />
-              <Picker.Item label="영업" value="C" />
-              <Picker.Item label="개발" value="D" />
-              <Picker.Item label="디자인" value="E" />
-              <Picker.Item label="마케팅" value="F" />
-            </Picker>
-            <Label>입사일</Label>
-            <DatePicker 
-            value={selectedDate}
-          
-            />
-               <View style={styles.buttonAreaLayout}>
-              <BasicButton type="submit" onPress={onSubmit}>
-                <Text style={styles.buttonText}>입력</Text>
-              </BasicButton>
-            </View>
-          </Form>
-          </Content>
-       </Container>
-    </SafeAreaView>
+    <Container style={styles.container}>
+     
+    <Content padder>
+   <Form style={styles.formLayout}>
+   <View style={styles.inputLayout}>
+   <Label style={{marginBottom:10}}>전화번호</Label>
+   <Item rounded>   
+         <Input 
+            keyboardType={'number-pad'}
+         value={phone} onChangeText={onChangePhone}/>
+         <CloseButtonCoord>
+             {phone && (
+               <AntDesign
+                 name="closecircle"
+                 color="grey"
+                 size={16}
+                 onPress={onResetPhone}
+               />
+             )}
+           </CloseButtonCoord>
+       </Item>
+      </View>
+      <View style={styles.inputLayout}>
+       <Label style={{marginBottom:10}}>소속 부서</Label>
+         <Picker
+           mode="dropdown"
+           placeholder="소속 부서를 선택해주세요"
+           iosIcon={<AntDesign name="down" />}
+           placeholderStyle={{ color: "#2874F0" }}
+           note={false}
+           selectedValue={selectedDept}
+           onValueChange={onDeptValueChange}
+         >
+           <Picker.Item label="CEO" value="A" />
+           <Picker.Item label="경영" value="B" />
+           <Picker.Item label="영업" value="C" />
+           <Picker.Item label="개발" value="D" />
+           <Picker.Item label="디자인" value="E" />
+           <Picker.Item label="마케팅" value="F" />
+         </Picker>
+         </View>
+         <View style={styles.inputLayout}>
+         <Label style={{marginBottom:10}}>입사일</Label>
+         <DatePicker 
+         date={selectedDate}
+         setDate={setSelectedDate}
+       
+         />
+         </View>
+            <View style={styles.buttonAreaLayout}>
+           <BasicButton type="submit" onPress={onSubmit}>
+             <Text style={styles.buttonText}>입력</Text>
+           </BasicButton>
+         </View>
+       </Form>
+       </Content>
+    </Container>
   );
 }
 const styles = StyleSheet.create({
@@ -112,28 +120,14 @@ const styles = StyleSheet.create({
   },
 
   inputLayout: {
-    padding: 10,
-    fontSize: 20,
+    padding: 16,
+   
   },
-  registerInfo: {
-    fontSize: 16,
-    textAlign: 'center',
-  },
-  anotherInfo: {
-    fontSize: 16,
-    textAlign: 'center',
-    marginBottom: 6,
-  },
-  rowstyle: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexDirection: 'row',
-    marginBottom: 16,
-  },
+ 
   buttonAreaLayout: {
     fontSize: 20,
     flexDirection: 'row-reverse',
-    marginBottom: 36,
+    marginTop: 50,
   },
   buttonText: {
     color: '#fff',

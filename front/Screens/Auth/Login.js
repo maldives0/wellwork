@@ -12,7 +12,8 @@ import {
 } from 'react-native';
 import { Input } from 'react-native-elements';
 import axios from 'axios';
-import useSWR, { mutate } from 'swr';
+import useSWR from 'swr';
+import fetcher from '../../utils/fetcher'
 import initialUser from '../../assets/store';
 import produce from 'immer';
 import useInput from '../../hooks/useInput';
@@ -22,10 +23,8 @@ import { BasicButton, CloseButtonCoord } from '../../Components/BasicStyles';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
 function LogInForm({ route, navigation }) {
-  const { data: userData, error } = useSWR('globalState', {
-    initialData: initialUser,
-  });
-
+  const { data: userData, mutate:mutateUser,error } = useSWR('http://localhost:3000/api/users', fetcher);
+// console.log(userData)
   const ref_input = [];
   ref_input[0] = useRef();
   ref_input[1] = useRef();
@@ -49,8 +48,19 @@ function LogInForm({ route, navigation }) {
 
   const onSubmit = async () => {
     try {
-      setEmail('');
-      setPassword('');
+      mutateUser(produce(draft=>{
+       
+        draft.push({id:2})
+      
+      return draft
+      }),false).then(()=>
+      {
+        console.log(userData)
+        // navigation.navigate("회원가입하기")
+      })
+     
+      // setEmail('');
+      // setPassword('');
     } catch (err) {
       console.dir(err);
     }

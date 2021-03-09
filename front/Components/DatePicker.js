@@ -11,8 +11,8 @@ import React, { useState } from 'react';
 
 import dayjs from 'dayjs';
 
-const DataPicker = () => {
-  const [date, setDate] = useState(new Date());
+const DataPicker = ({date, setDate}) => {
+[date, setDate] = useState(new Date());
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
   const showDatePicker = () => {
@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
   infoText: {},
 
   iosLayout: {
-    padding: 36,
+    padding: 16,
   },
 });
 export default DataPicker;

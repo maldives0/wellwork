@@ -10,8 +10,8 @@ const Back_Url = 'http://localhost:3001';
 
 const UserProfile = ({ navigation, route }) => {
   // const { data: userData } = useSWR(`${Back_Url}/users`, fetcher);
-  const { data, error } = useSWR('globalState', { initialData: initialUser });
-  console.log('1:', data.users[0].nickname, data.me);
+  // const { data, error } = useSWR('globalState', { initialData: initialUser });
+  // console.log('1:', data.users[0].nickname, data.me);
 
   const onChangePassword = useCallback(() => {
     console.warn('hi');
