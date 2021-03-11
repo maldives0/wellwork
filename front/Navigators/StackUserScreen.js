@@ -1,19 +1,20 @@
-import React from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
+import React from "react";
+import { createStackNavigator } from "@react-navigation/stack";
 
-import WorkingTime from '../Screens/Work/WorkingTime';
-import ApplyHome from '../Screens/Apply/ApplyHome';
-import UserProfile from '../Components/UserProfile';
+import UserDetail from "@/Screens/User/UserDetail";
+import ChangeUserData from "@/Screens/User/ChangeUserData";
 
 const StackUserScreen = createStackNavigator();
 
-function StackApplyScreen() {
+function User() {
   return (
     <StackUserScreen.Navigator initialRouteName="근무시간">
-      <StackUserScreen.Screen name="근무시간" component={WorkingTime} />
-      <StackUserScreen.Screen name="근태신청" component={ApplyHome} />
-      <StackUserScreen.Screen name="프로필" component={UserProfile} />
+      <StackUserScreen.Screen name="프로필" component={UserDetail} />
+      <StackUserScreen.Screen
+        name="개인정보 변경하기"
+        component={ChangeUserData}
+      />
     </StackUserScreen.Navigator>
   );
 }
-export default StackApplyScreen;
+export default User;

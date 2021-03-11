@@ -1,7 +1,7 @@
-import React from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
-import TabNavigation from './TabNavigation';
-import UserDetail from '../Screens/User/UserDetail';
+import React from "react";
+import { createStackNavigator } from "@react-navigation/stack";
+import TabNavigation from "./TabNavigation";
+import UserDetail from "@/Screens/User/UserDetail";
 
 const MainStackNavigation = createStackNavigator();
 
@@ -17,7 +17,7 @@ const Main = () => {
         name="UserDetail"
         component={UserDetail}
         options={{
-          headerTitleAlign: 'center',
+          headerTitleAlign: "center",
         }}
       />
     </MainStackNavigation.Navigator>

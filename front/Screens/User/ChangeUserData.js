@@ -1,4 +1,5 @@
-import React, { useCallback, useState } from "react";
+import React, { useState, useCallback } from "react";
+
 import { StyleSheet, SafeAreaView, View, Text } from "react-native";
 
 import axios from "axios";
@@ -8,26 +9,24 @@ import {
   Container,
   Header,
   Content,
-  Picker,
   Form,
   Item,
   Input,
   Label,
+  Picker,
 } from "native-base";
+import DropDownPicker from "react-native-dropdown-picker";
 import useInput from "@/hooks/useInput";
 import DatePicker from "@/Components/DatePicker";
 import { BasicButton, CloseButtonCoord } from "@/Components/BasicStyles";
 import AntDesign from "react-native-vector-icons/AntDesign";
-import { Platform } from "react-native";
-import DropDownPicker from "react-native-dropdown-picker";
-
-function UserInfo({ route, navigation }) {
+const ChangeUserData = ({ navigation, route }) => {
   const [phone, onChangePhone, onResetPhone, setPhone] = useInput("");
   const [selectedDept, setSelectedDept] = useState(null);
   const [selectedDate, setSelectedDate] = useState(new Date());
 
-  const onDeptValueChange = useCallback((e) => {
-    setSelectedDept(e);
+  const onDeptValueChange = useCallback((item) => {
+    setSelectedDept(item.value);
   }, []);
   const onSubmit = async () => {
     try {
@@ -117,42 +116,25 @@ function UserInfo({ route, navigation }) {
       </Content>
     </Container>
   );
-}
+};
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  formLayout: {
-    padding: 24,
-    flex: 1,
+    alignItems: "center",
     justifyContent: "center",
   },
-
-  inputLayout: {
-    padding: 16,
+  photo: {
+    width: 100,
+    height: 100,
+    borderRadius: 100,
   },
-
-  buttonAreaLayout: {
-    fontSize: 20,
-    flexDirection: "row-reverse",
-    marginTop: 50,
-  },
-  buttonText: {
-    color: "#fff",
-    fontSize: 20,
-  },
-  btnKakaoLogin: {
-    height: 48,
-    width: 240,
-    alignSelf: "center",
-    backgroundColor: "#F8E71C",
-    borderRadius: 0,
-    borderWidth: 0,
+  info: {
+    paddingTop: 50,
+    alignItems: "flex-start",
   },
   label: {
     marginTop: 26,
     marginBottom: 10,
   },
 });
-
-export default UserInfo;
+export default ChangeUserData;

@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useCallback } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import {
   StyleSheet,
   SafeAreaView,
@@ -7,25 +7,28 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   Dimensions,
-} from 'react-native';
-import { Input } from 'react-native-elements';
-import axios from 'axios';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+} from "react-native";
+import { Input } from "react-native-elements";
+import axios from "axios";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import useInput from "@/hooks/useInput";
+import { BasicButton, CloseButtonCoord } from "@/Components/BasicStyles";
+import AntDesign from "react-native-vector-icons/AntDesign";
+import useSWR from "swr";
+import fetcher from "@/utils/fetcher";
 
-import useInput from '../../hooks/useInput';
-import { BasicButton, CloseButtonCoord } from '../../Components/BasicStyles';
-import AuthInput from '../../Components/AuthInput';
-import AntDesign from 'react-native-vector-icons/AntDesign';
-import useSWR from 'swr';
-import fetcher from '../../utils/fetcher'
-import initialUser from '../../assets/store';
-import produce from 'immer';
+import produce from "immer";
 
-
-const window = Dimensions.get('window');
+const window = Dimensions.get("window");
 function RegisterEmail({ route, navigation, props }) {
-  const { data: userData, mutate:mutateUser,error } = useSWR('http://localhost:3000/api/users', fetcher);
-  console.log('change:',userData)
+  const { data: userData, mutate: mutateUser, error } = useSWR(
+    "http://localhost:3000/api/users",
+    fetcher,
+    {
+      dedupingInterval: 50000,
+    }
+  );
+  console.log("change:", userData);
 
   const ref_input = [];
   ref_input[0] = useRef();
@@ -42,45 +45,45 @@ function RegisterEmail({ route, navigation, props }) {
     }
   };
 
-  const [email, onChangeEmail, onResetEmail, setEmail] = useInput('');
+  const [email, onChangeEmail, onResetEmail, setEmail] = useInput("");
   const [nickname, onChangeNickname, onResetNickname, setNickname] = useInput(
-    '',
+    ""
   );
   const [password, onChangePassword, onResetPassword, setPassword] = useInput(
-    '',
+    ""
   );
   const [
     passwordCheck,
     onChangePasswordCheck,
     onResetPasswordCheck,
     setPasswordCheck,
-  ] = useInput('');
+  ] = useInput("");
 
   const [loginLoading, setLoginLoading] = useState(false);
-  const [errorEmail, setErrorEmail] = useState('');
-  const [errorNickname, setErrorNickname] = useState('');
-  const [errorPassword, setErrorPassword] = useState('');
-  const [errorPasswordCheck, setErrorPasswordCheck] = useState('');
+  const [errorEmail, setErrorEmail] = useState("");
+  const [errorNickname, setErrorNickname] = useState("");
+  const [errorPassword, setErrorPassword] = useState("");
+  const [errorPasswordCheck, setErrorPasswordCheck] = useState("");
   const [isSecureText, setIsSecureText] = useState(true);
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    setErrorEmail('');
-    setErrorNickname('');
-    setErrorPassword('');
-    setErrorPasswordCheck('');
+    setErrorEmail("");
+    setErrorNickname("");
+    setErrorPassword("");
+    setErrorPasswordCheck("");
     // const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     // if (!email || !email.trim() || !emailRegex.test(email)) {
     //   return setErrorEmail('유효하지 않은 이메일입니다.');
     // }
     if (!nickname || !nickname.trim()) {
-      return setErrorNickname('닉네임을 입력해 주세요.');
+      return setErrorNickname("닉네임을 입력해 주세요.");
     }
     if (!password || !password.trim()) {
-      return setErrorPassword('패스워드를 입력해 주세요.');
+      return setErrorPassword("패스워드를 입력해 주세요.");
     }
     if (password !== passwordCheck) {
-      return setErrorPasswordCheck('입력하신 비밀번호와 일치하지 않습니다.');
+      return setErrorPasswordCheck("입력하신 비밀번호와 일치하지 않습니다.");
     }
     try {
       // mutate('globalState',
@@ -88,16 +91,16 @@ function RegisterEmail({ route, navigation, props }) {
       //     console.log('mutate',draft)
       //     draft?.users.unshift({name:"hong"})
       //     return draft
-         
+
       //   })
       // );
       // console.log('2',data);
 
-      setEmail('');
-      setNickname('');
-      setPassword('');
-      setPasswordCheck('');
-      navigation.navigate("사용자 정보")
+      setEmail("");
+      setNickname("");
+      setPassword("");
+      setPasswordCheck("");
+      navigation.navigate("사용자 정보");
     } catch (err) {
       console.dir(err);
     }
@@ -109,7 +112,7 @@ function RegisterEmail({ route, navigation, props }) {
     <KeyboardAwareScrollView
       extraHeight={300}
       enableOnAndroid={true}
-      enableAutomaticScroll={Platform.OS === 'ios'}
+      enableAutomaticScroll={Platform.OS === "ios"}
       contentContainerStyle={{ height: -30 }}
       resetScrollToCoords={{ x: 0, y: 0 }}
       scrollEnabled={true}
@@ -122,18 +125,18 @@ function RegisterEmail({ route, navigation, props }) {
               <Input
                 value={email}
                 onChangeText={onChangeEmail}
-                keyboardType={'email-address'}
+                keyboardType={"email-address"}
                 autoCorrect={false}
                 autoFocus={true}
                 errorMessage={errorEmail}
                 leftIcon={{
-                  type: 'antdesign',
-                  name: 'user',
+                  type: "antdesign",
+                  name: "user",
                 }}
                 placeholder="이메일"
                 ref={ref_input[0]}
                 onSubmitEditing={(text) => focusNext(0)}
-                autoCapitalize={'none'}
+                autoCapitalize={"none"}
               />
               <CloseButtonCoord>
                 {email && (
@@ -152,12 +155,12 @@ function RegisterEmail({ route, navigation, props }) {
                 onSubmitEditing={(text) => focusNext(1)}
                 value={nickname}
                 onChangeText={onChangeNickname}
-                autoCapitalize={'words'}
+                autoCapitalize={"words"}
                 errorMessage={errorNickname}
                 placeholder="닉네임"
                 leftIcon={{
-                  type: 'antdesign',
-                  name: 'smileo',
+                  type: "antdesign",
+                  name: "smileo",
                 }}
               />
               <CloseButtonCoord>
@@ -181,16 +184,16 @@ function RegisterEmail({ route, navigation, props }) {
                 autoCorrect={false}
                 errorMessage={errorPassword}
                 leftIcon={{
-                  type: 'antdesign',
-                  name: 'key',
+                  type: "antdesign",
+                  name: "key",
                 }}
                 rightIcon={{
-                  type: 'antdesign',
-                  name: isSecureText ? 'eye' : 'eyeo',
+                  type: "antdesign",
+                  name: isSecureText ? "eye" : "eyeo",
                   onPress: () => setIsSecureText((prev) => !prev),
                 }}
                 placeholder="비밀번호"
-                autoCapitalize={'none'}
+                autoCapitalize={"none"}
                 secureTextEntry={isSecureText}
               />
               <CloseButtonCoord>
@@ -212,14 +215,14 @@ function RegisterEmail({ route, navigation, props }) {
                 onChangeText={onChangePasswordCheck}
                 autoCorrect={false}
                 errorMessage={errorPasswordCheck}
-                leftIcon={{ type: 'antdesign', name: 'key' }}
+                leftIcon={{ type: "antdesign", name: "key" }}
                 rightIcon={{
-                  type: 'antdesign',
-                  name: isSecureText ? 'eye' : 'eyeo',
+                  type: "antdesign",
+                  name: isSecureText ? "eye" : "eyeo",
                   onPress: () => setIsSecureText((prev) => !prev),
                 }}
                 placeholder="비밀번호 확인하기"
-                autoCapitalize={'none'}
+                autoCapitalize={"none"}
                 secureTextEntry={isSecureText}
               />
               <CloseButtonCoord>
@@ -252,39 +255,39 @@ const styles = StyleSheet.create({
   formLayout: {
     padding: 16,
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: "center",
   },
 
   registerInfo: {
     fontSize: 16,
-    textAlign: 'center',
+    textAlign: "center",
   },
   anotherInfo: {
     fontSize: 16,
-    textAlign: 'center',
+    textAlign: "center",
     marginBottom: 6,
   },
   rowstyle: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexDirection: 'row',
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row",
     marginBottom: 16,
   },
   buttonAreaLayout: {
     fontSize: 20,
-    flexDirection: 'row-reverse',
+    flexDirection: "row-reverse",
     marginBottom: 36,
   },
   buttonText: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 20,
   },
 
   btnKakaoLogin: {
     height: 48,
     width: 240,
-    alignSelf: 'center',
-    backgroundColor: '#F8E71C',
+    alignSelf: "center",
+    backgroundColor: "#F8E71C",
     borderRadius: 0,
     borderWidth: 0,
   },

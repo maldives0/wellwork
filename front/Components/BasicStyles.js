@@ -1,4 +1,4 @@
-import styled, { css } from '@emotion/native';
+import styled, { css } from "@emotion/native";
 
 export const BasicButton = styled.TouchableOpacity`
   flex-direction: row;
@@ -27,7 +27,7 @@ export const CloseButtonCoord = styled.Text`
 `;
 export const ProfileInfo = styled.Text`
   font-size: 20px;
-  margin-top: 15px;
+  margin-top: 25px;
   text-align: center;
 `;
 

@@ -1,29 +1,29 @@
-import React from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
+import React from "react";
+import { createStackNavigator } from "@react-navigation/stack";
 
-import ApplyHome from '../Screens/Apply/ApplyHome';
-import ApplyForm from '../Screens/Apply/ApplyForm';
+import ApplyHome from "@/Screens/Apply/ApplyHome";
+import ApplyForm from "@/Screens/Apply/ApplyForm";
 
-const Stack = createStackNavigator();
+const StackApplyScreen = createStackNavigator();
 
-function StackApplyScreen() {
+function Apply() {
   return (
-    <Stack.Navigator>
-      <Stack.Screen
+    <StackApplyScreen.Navigator>
+      <StackApplyScreen.Screen
         name="ApplyHome"
         component={ApplyHome}
         options={{
-          title: '근태 현황보기',
+          title: "근태 현황보기",
         }}
       />
-      <Stack.Screen
+      <StackApplyScreen.Screen
         name="ApplyForm"
         component={ApplyForm}
         options={{
-          title: '근태 신청하기',
+          title: "근태 신청하기",
         }}
       />
-    </Stack.Navigator>
+    </StackApplyScreen.Navigator>
   );
 }
-export default StackApplyScreen;
+export default Apply;

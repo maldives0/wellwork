@@ -1,18 +1,12 @@
 //ios 설정을 하지 않아 후에 설정 필요함 https://github.com/react-native-datetimepicker/datetimepicker
-import {
-  TouchableOpacity,
-  StyleSheet,
-  View,
-  Text,
-  Platform,
-} from 'react-native';
-import DateTimePickerModal from 'react-native-modal-datetime-picker';
-import React, { useState } from 'react';
+import { TouchableOpacity, StyleSheet, View, Text } from "react-native";
+import DateTimePickerModal from "react-native-modal-datetime-picker";
+import React, { useState } from "react";
 
-import dayjs from 'dayjs';
+import dayjs from "dayjs";
 
-const DataPicker = ({date, setDate}) => {
-[date, setDate] = useState(new Date());
+const DataPicker = ({ date, setDate }) => {
+  [date, setDate] = useState(new Date());
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
   const showDatePicker = () => {
@@ -38,7 +32,7 @@ const DataPicker = ({date, setDate}) => {
           }}
         >
           <Text style={styles.buttonText}>
-            {dayjs(date).format('YYYY년 MM월 DD일')}
+            {dayjs(date).format("YYYY년 MM월 DD일")}
           </Text>
         </TouchableOpacity>
 
@@ -55,9 +49,9 @@ const DataPicker = ({date, setDate}) => {
 
 const styles = StyleSheet.create({
   buttonText: {
-    textAlign: 'center',
+    textAlign: "center",
     fontSize: 25,
-    textAlignVertical: 'center',
+    textAlignVertical: "center",
   },
   infoText: {},
 

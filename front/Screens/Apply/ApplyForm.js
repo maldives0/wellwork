@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback } from "react";
 import {
   StyleSheet,
   SafeAreaView,
@@ -6,8 +6,8 @@ import {
   Text,
   Platform,
   View,
-} from 'react-native';
-import ApplyCalendarPicker from '../../Components/ApplyCalendarPicker';
+} from "react-native";
+import ApplyCalendarPicker from "@/Components/ApplyCalendarPicker";
 
 function ApplyForm({ route, navigation }) {
   const type = route.params.type;
@@ -29,8 +29,8 @@ function ApplyForm({ route, navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
   scrollView: {
     marginTop: 10,
@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     margin: 16,
   },
   iosOnly: {
-    paddingTop: Platform.OS === 'ios' ? 36 : 0,
+    paddingTop: Platform.OS === "ios" ? 36 : 0,
   },
 });
 
