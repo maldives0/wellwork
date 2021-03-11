@@ -7,13 +7,13 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const config = new DocumentBuilder()
     .setTitle('Wellwork API')
-    .setDescription('wellwork 개발을 위한 API 문서입니다.')
+    .setDescription('잘키움 개발을 위한 API 문서입니다.')
     .setVersion('1.0')
     .addCookieAuth('connect.sid')
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
-  
+
   await app.listen(3000);
   if (module.hot) {
     module.hot.accept();

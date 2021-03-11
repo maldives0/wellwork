@@ -19,29 +19,26 @@ import { JoinRequestDto } from './dto/join.request.dto';
 import { LoginRequestDto } from './dto/login.request.dto';
 import { UsersService } from './users.service';
 
-
 @ApiTags('USERS')
 @Controller('api/users')
 export class UsersController {
-    constructor(private usersService: UsersService) {}
+  constructor(private usersService: UsersService) {}
 
-//   @ApiCookieAuth('connect.sid')
+  //   @ApiCookieAuth('connect.sid')
   @ApiOperation({ summary: '내 정보 가져오기' })
-//   @UseGuards(LoggedInGuard)
+  //   @UseGuards(LoggedInGuard)
   @Get()
   async getProfile() {
-   return [{email:"momo@aiskorea.co.kr", nickname:"momo", password:"1234"}]
+    return { email: 'momo@aiskorea.co.kr', nickname: 'momo', password: '1234' };
   }
 
   @ApiOperation({ summary: '로그인' })
-//   @UseGuards(LocalAuthGuard)
+  //   @UseGuards(LocalAuthGuard)
   @Post('login')
-  async login() {
-   
-  }
+  async login() {}
 
   @ApiOperation({ summary: '회원가입' })
-//   @UseGuards(NotLoggedInGuard)
+  //   @UseGuards(NotLoggedInGuard)
   @Post('join')
   async join(@Body() data: JoinRequestDto) {
     // const user = this.usersService.findByEmail(data.email);
@@ -62,7 +59,7 @@ export class UsersController {
 
   @ApiCookieAuth('connect.sid')
   @ApiOperation({ summary: '로그아웃' })
-//   @UseGuards(LoggedInGuard)
+  //   @UseGuards(LoggedInGuard)
   @Post('logout')
   async logout(@Response() res) {
     res.clearCookie('connect.sid', { httpOnly: true });
