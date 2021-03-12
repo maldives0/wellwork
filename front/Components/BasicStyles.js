@@ -4,7 +4,6 @@ export const BasicButton = styled.TouchableOpacity`
   flex-direction: row;
   border-radius: 3px;
   padding: 15px;
-  margin: 5px;
   justify-content: center;
   align-content: center;
   width: 150px;
@@ -22,12 +21,19 @@ export const BorderButton = styled.TouchableOpacity`
 
 export const CloseButtonCoord = styled.Text`
   position: absolute;
-  top: 16px;
   right: 50px;
+  top: 16px;
+
+  ${(props) =>
+    props.phone &&
+    css`
+      right: 20px;
+      top: 13px;
+    `}
 `;
 export const ProfileInfo = styled.Text`
+  margin-top: 10px;
   font-size: 20px;
-  margin-top: 25px;
   text-align: center;
 `;
 

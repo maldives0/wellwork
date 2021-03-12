@@ -2,7 +2,7 @@ import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 
 import UserDetail from "@/Screens/User/UserDetail";
-import ChangeUserData from "@/Screens/User/ChangeUserData";
+import ChangeUserInfo from "@/Screens/User/ChangeUserInfo";
 
 const StackUserScreen = createStackNavigator();
 
@@ -12,7 +12,7 @@ function User() {
       <StackUserScreen.Screen name="프로필" component={UserDetail} />
       <StackUserScreen.Screen
         name="개인정보 변경하기"
-        component={ChangeUserData}
+        component={ChangeUserInfo}
       />
     </StackUserScreen.Navigator>
   );

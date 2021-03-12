@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 
 import NavController from "./Components/NavController";
-import initialUser from "./assets/store";
 import useSWR from "swr";
 import fetcher from "@/utils/fetcher";
 import AsyncStorage from "@react-native-async-storage/async-storage";

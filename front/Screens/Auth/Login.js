@@ -148,11 +148,26 @@ function LogInForm({ route, navigation }) {
           </View>
           <View style={styles.rowstyle}>
             <Text style={styles.registerInfo}>아직 회원이 아니신가요?</Text>
-            <GoToButton screenName="회원가입하기" />
+            <GoToButton
+              marginLeft={10}
+              color={"#348f50"}
+              size={14}
+              screenName="회원가입하기"
+            />
           </View>
           <View style={styles.rowstyle}>
-            <GoToButton screenName="카카오 로그인" />
-            <GoToButton screenName="사용자 정보" />
+            <GoToButton
+              marginLeft={10}
+              color={"#348f50"}
+              size={14}
+              screenName="카카오 로그인"
+            />
+            <GoToButton
+              marginLeft={10}
+              color={"#348f50"}
+              size={14}
+              screenName="사용자 정보"
+            />
           </View>
         </View>
       </TouchableWithoutFeedback>

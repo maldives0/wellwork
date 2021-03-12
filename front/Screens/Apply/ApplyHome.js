@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   iosOnly: {
-    paddingTop: Platform.OS === "ios" ? 36 : 26,
+    paddingTop: Platform.OS === "ios" ? 36 : 16,
   },
   viewText: {
     fontSize: Platform.OS === "ios" ? 20 : 15,

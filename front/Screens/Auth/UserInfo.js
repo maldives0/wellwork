@@ -3,7 +3,7 @@ import { StyleSheet, SafeAreaView, View, Text } from "react-native";
 
 import axios from "axios";
 import useSWR, { mutate } from "swr";
-import initialUser from "@/assets/store";
+
 import {
   Container,
   Header,
@@ -49,11 +49,12 @@ function UserInfo({ route, navigation }) {
             <Label style={styles.label}>전화번호</Label>
             <Item rounded>
               <Input
+                style={{ marginLeft: 15, height: 40 }}
                 keyboardType={"number-pad"}
                 value={phone}
                 onChangeText={onChangePhone}
               />
-              <CloseButtonCoord>
+              <CloseButtonCoord phone>
                 {phone && (
                   <AntDesign
                     name="closecircle"
@@ -86,6 +87,7 @@ function UserInfo({ route, navigation }) {
               </Picker>
             ) : (
               <DropDownPicker
+                containerStyle={{ height: 40 }}
                 placeholder="소속 부서를 선택해주세요"
                 items={[
                   { label: "CEO", value: "A" },
@@ -97,7 +99,6 @@ function UserInfo({ route, navigation }) {
                 ]}
                 defaultValue={selectedDept}
                 DropDownPicker={onDeptValueChange}
-                showArrow={false}
                 itemStyle={{
                   justifyContent: "flex-start",
                 }}
@@ -141,16 +142,9 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 20,
   },
-  btnKakaoLogin: {
-    height: 48,
-    width: 240,
-    alignSelf: "center",
-    backgroundColor: "#F8E71C",
-    borderRadius: 0,
-    borderWidth: 0,
-  },
+
   label: {
-    marginTop: 26,
+    marginTop: 16,
     marginBottom: 10,
   },
 });

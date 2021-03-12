@@ -40,7 +40,7 @@ const UserDetail = ({ navigation, route }) => {
       />
       <ProfileInfo>{userData?.nickname}</ProfileInfo>
       <View style={styles.info}>
-        <GoToButton screenName="개인정보 변경하기" />
+        <GoToButton color={"#000"} size={20} screenName="개인정보 변경하기" />
 
         <ProfileInfo onPress={() => onPressLogout()}>로그아웃</ProfileInfo>
       </View>

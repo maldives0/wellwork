@@ -20,7 +20,7 @@ import useInput from "@/hooks/useInput";
 import DatePicker from "@/Components/DatePicker";
 import { BasicButton, CloseButtonCoord } from "@/Components/BasicStyles";
 import AntDesign from "react-native-vector-icons/AntDesign";
-const ChangeUserData = ({ navigation, route }) => {
+const ChangeUserInfo = ({ navigation, route }) => {
   const [phone, onChangePhone, onResetPhone, setPhone] = useInput("");
   const [selectedDept, setSelectedDept] = useState(null);
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -48,11 +48,12 @@ const ChangeUserData = ({ navigation, route }) => {
             <Label style={styles.label}>전화번호</Label>
             <Item rounded>
               <Input
+                style={{ marginLeft: 15, height: 40 }}
                 keyboardType={"number-pad"}
                 value={phone}
                 onChangeText={onChangePhone}
               />
-              <CloseButtonCoord>
+              <CloseButtonCoord phone>
                 {phone && (
                   <AntDesign
                     name="closecircle"
@@ -96,7 +97,6 @@ const ChangeUserData = ({ navigation, route }) => {
                 ]}
                 defaultValue={selectedDept}
                 DropDownPicker={onDeptValueChange}
-                showArrow={false}
                 itemStyle={{
                   justifyContent: "flex-start",
                 }}
@@ -120,21 +120,30 @@ const ChangeUserData = ({ navigation, route }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  photo: {
-    width: 100,
-    height: 100,
-    borderRadius: 100,
-  },
-  info: {
-    paddingTop: 50,
     alignItems: "flex-start",
   },
+  formLayout: {
+    padding: 24,
+    flex: 1,
+    justifyContent: "center",
+  },
+
+  inputLayout: {
+    padding: 16,
+  },
+
+  buttonAreaLayout: {
+    fontSize: 20,
+    flexDirection: "row-reverse",
+    marginTop: 30,
+  },
+  buttonText: {
+    color: "#fff",
+    fontSize: 20,
+  },
   label: {
-    marginTop: 26,
+    marginTop: 16,
     marginBottom: 10,
   },
 });
-export default ChangeUserData;
+export default ChangeUserInfo;

@@ -17,7 +17,6 @@ const StackWorkScreen = ({ navigation, route }) => {
   const [resetStopwatch, setResetStopwatch] = useState(false);
   const [isSignIn, setIsSignIn] = useState(false);
   const [isWorking, setIsWorking] = useState(true);
-
   const [signInTime, setSignInTime] = useState(new Date());
   const [signOutTime, setSignOutTime] = useState(new Date());
 
@@ -60,6 +59,7 @@ const StackWorkScreen = ({ navigation, route }) => {
             }}
           />
           <BasicButton
+            style={{ marginBottom: 16 }}
             onPress={() => {
               setIsStopwatchStart(true);
               setResetStopwatch(false);
@@ -132,18 +132,18 @@ const styles = StyleSheet.create({
     }),
   },
   timePickerLayout: {
-    borderColor: "#348F50",
-    borderStyle: "solid",
-    borderTopWidth: 1,
+    backgroundColor: "#fff",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    elevation: 5,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
     padding: 26,
   },
   viewLayout: {
-    borderColor: "#348F50",
-    borderStyle: "solid",
-    borderTopWidth: 1,
     marginBottom: 16,
     alignItems: "center",
     justifyContent: "center",
