@@ -34,7 +34,7 @@ const ChangeUserInfo = ({ navigation, route }) => {
       setPhone("");
       setSelectedDept(null);
       setSelectedDate(new Date());
-      navigation.navigate("로그인");
+      navigation.navigate("프로필");
     } catch (err) {
       console.dir(err);
     }

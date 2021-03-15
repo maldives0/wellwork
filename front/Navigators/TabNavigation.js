@@ -1,6 +1,6 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-
+import { Platform } from "react-native";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import WorkingTime from "@/Screens/Work/WorkingTime";
 import StackUserScreen from "./StackUserScreen";
@@ -33,7 +33,7 @@ const Main = () => {
         showLabel: false,
         activeTintColor: "#348F50",
         inactiveTintColor: "gray",
-        style: { height: 60 },
+        style: { height: Platform.OS === "ios" ? 80 : 60 },
       }}
     >
       <Tab.Screen name="WorkingTime" component={WorkingTime} />

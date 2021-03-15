@@ -184,7 +184,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    marginTop: Platform.OS === "ios" ? 30 : 50,
+    marginTop: 50,
   },
   infoText: {
     margin: 5,

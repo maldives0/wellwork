@@ -4,22 +4,22 @@ import {
   View,
   Text,
   Platform,
-} from 'react-native';
-import DateTimePickerModal from 'react-native-modal-datetime-picker';
-import React, { useState, useEffect } from 'react';
-import dayjs from 'dayjs';
+} from "react-native";
+import DateTimePickerModal from "react-native-modal-datetime-picker";
+import React, { useState, useEffect } from "react";
+import dayjs from "dayjs";
 
 const SignInTimePicker = (props) => {
   let signInTime = props.signInTime;
   let isSignIn = props.isSignIn;
+  let setSignInTime = props.setSignInTime;
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
-  const [startWorkTime, setStartWorkTime] = useState(signInTime);
 
   useEffect(() => {
-    if (signInTime) {
-      setStartWorkTime(props.signInTime);
+    if (isSignIn) {
+      setSignInTime(new Date());
     }
-  }, [signInTime, isSignIn]);
+  }, [isSignIn]);
 
   const showDatePicker = () => {
     setDatePickerVisibility(true);
@@ -31,8 +31,8 @@ const SignInTimePicker = (props) => {
 
   const handleConfirm = (selectedDate) => {
     // console.warn("A date has been picked: ", selectedDate);
-    const currentDate = selectedDate || startWorkTime;
-    setStartWorkTime(currentDate);
+    const currentDate = selectedDate || signInTime;
+    setSignInTime(currentDate);
     hideDatePicker();
   };
 
@@ -47,7 +47,7 @@ const SignInTimePicker = (props) => {
         >
           <Text style={styles.typeInfo}>{props.type}</Text>
           <Text style={styles.dateTimeText}>
-            {dayjs(startWorkTime.getTime()).format('A hh:mm')}
+            {dayjs(signInTime.getTime()).format("A hh:mm:ss")}
           </Text>
         </TouchableOpacity>
       </View>
@@ -64,29 +64,29 @@ const SignInTimePicker = (props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   buttonLayout: {
     ...Platform.select({
       android: {
-        justifyContent: 'center',
-        alignItems: 'center',
+        justifyContent: "center",
+        alignItems: "center",
       },
     }),
   },
   typeInfo: {
-    textAlign: 'center',
+    textAlign: "center",
     fontSize: 15,
-    textAlignVertical: 'center',
+    textAlignVertical: "center",
   },
   dateTimeText: {
     fontSize: 34,
-    fontWeight: 'normal',
+    fontWeight: "normal",
     padding: 16,
   },
   viewText: {
-    textAlign: 'center',
+    textAlign: "center",
     fontSize: 20,
     marginBottom: 20,
   },

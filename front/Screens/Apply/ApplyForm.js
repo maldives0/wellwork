@@ -20,7 +20,7 @@ function ApplyForm({ route, navigation }) {
           <Text style={styles.title}>
             신청유형: {str.substring(1, str.length - 1)}
           </Text>
-          <ApplyCalendarPicker />
+          <ApplyCalendarPicker navigation={navigation} />
         </View>
       </ScrollView>
     </SafeAreaView>

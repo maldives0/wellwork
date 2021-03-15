@@ -31,11 +31,7 @@ const UserDetail = ({ navigation, route }) => {
       <Image
         style={styles.photo}
         source={{
-          uri: gravatar.url(
-            "momo@aiskorea.co.kr",
-            { s: "20px", d: "retro" },
-            true
-          ),
+          uri: gravatar.url(userData?.email, { s: "20px", d: "retro" }, true),
         }}
       />
       <ProfileInfo>{userData?.nickname}</ProfileInfo>
@@ -59,7 +55,6 @@ const styles = StyleSheet.create({
     borderRadius: 100,
   },
   info: {
-    paddingTop: 50,
     alignItems: "flex-start",
   },
 });

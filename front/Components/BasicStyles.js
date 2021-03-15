@@ -4,6 +4,7 @@ export const BasicButton = styled.TouchableOpacity`
   flex-direction: row;
   border-radius: 3px;
   padding: 15px;
+  margin: 10px;
   justify-content: center;
   align-content: center;
   width: 150px;
@@ -32,7 +33,7 @@ export const CloseButtonCoord = styled.Text`
     `}
 `;
 export const ProfileInfo = styled.Text`
-  margin-top: 10px;
+  margin-top: 30px;
   font-size: 20px;
   text-align: center;
 `;

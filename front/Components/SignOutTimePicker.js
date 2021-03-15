@@ -4,23 +4,23 @@ import {
   View,
   Text,
   Platform,
-} from 'react-native';
-import DateTimePickerModal from 'react-native-modal-datetime-picker';
-import React, { useState, useEffect } from 'react';
-import dayjs from 'dayjs';
+} from "react-native";
+import DateTimePickerModal from "react-native-modal-datetime-picker";
+import React, { useState, useEffect } from "react";
+import dayjs from "dayjs";
 
 const SignOutTimePicker = (props) => {
-  let isWorking = props.isWorking;
+  let isSignOut = props.isSignOut;
   let signOutTime = props.signOutTime;
+  let setSignOutTime = props.setSignOutTime;
 
-  const [endWorkTime, setEndWorkTime] = useState(signOutTime);
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
   useEffect(() => {
-    if (signOutTime) {
-      setEndWorkTime(props.signOutTime);
+    if (isSignOut) {
+      setSignOutTime(new Date());
     }
-  }, [signOutTime]);
+  }, [isSignOut]);
 
   const showDatePicker = () => {
     setDatePickerVisibility(true);
@@ -32,8 +32,8 @@ const SignOutTimePicker = (props) => {
 
   const handleConfirm = (selectedDate) => {
     // console.warn("A date has been picked: ", selectedDate);
-    const currentDate = selectedDate || endWorkTime;
-    setEndWorkTime(currentDate);
+    const currentDate = selectedDate || signOutTime;
+    setSignOutTime(currentDate);
     hideDatePicker();
   };
 
@@ -49,10 +49,10 @@ const SignOutTimePicker = (props) => {
           <Text style={styles.typeInfo}>{props.type}</Text>
           <Text style={styles.dateTimeText}>
             {dayjs(
-              isWorking
-                ? endWorkTime.getTime() + 9 * 60 * 60 * 1000
-                : endWorkTime.getTime(),
-            ).format('A hh:mm')}
+              !isSignOut
+                ? signOutTime.getTime() + 9 * 60 * 60 * 1000
+                : signOutTime.getTime()
+            ).format("A hh:mm:ss")}
           </Text>
         </TouchableOpacity>
       </View>
@@ -69,31 +69,26 @@ const SignOutTimePicker = (props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   buttonLayout: {
     ...Platform.select({
       android: {
-        justifyContent: 'center',
-        alignItems: 'center',
+        justifyContent: "center",
+        alignItems: "center",
       },
     }),
   },
   typeInfo: {
-    textAlign: 'center',
+    textAlign: "center",
     fontSize: 15,
-    textAlignVertical: 'center',
+    textAlignVertical: "center",
   },
   dateTimeText: {
     fontSize: 34,
-    fontWeight: 'normal',
+    fontWeight: "normal",
     padding: 16,
-  },
-  viewText: {
-    textAlign: 'center',
-    fontSize: 20,
-    marginBottom: 20,
   },
 });
 export default SignOutTimePicker;

@@ -109,16 +109,16 @@ function RegisterEmail({ route, navigation, props }) {
   //   return null;
   // }
   return (
-    <KeyboardAwareScrollView
-      extraHeight={300}
-      enableOnAndroid={true}
-      enableAutomaticScroll={Platform.OS === "ios"}
-      contentContainerStyle={{ height: -30 }}
-      resetScrollToCoords={{ x: 0, y: 0 }}
-      scrollEnabled={true}
-      enableAutomaticScroll={true}
-    >
-      <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.container}>
+      <KeyboardAwareScrollView
+        extraHeight={300}
+        enableOnAndroid={true}
+        enableAutomaticScroll={Platform.OS === "ios"}
+        contentContainerStyle={{ height: -30 }}
+        resetScrollToCoords={{ x: 0, y: 0 }}
+        scrollEnabled={true}
+        enableAutomaticScroll={true}
+      >
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <View style={styles.formLayout}>
             <View style={styles.rowstyle}>
@@ -244,8 +244,8 @@ function RegisterEmail({ route, navigation, props }) {
             </View>
           </View>
         </TouchableWithoutFeedback>
-      </SafeAreaView>
-    </KeyboardAwareScrollView>
+      </KeyboardAwareScrollView>
+    </SafeAreaView>
   );
 }
 const styles = StyleSheet.create({
