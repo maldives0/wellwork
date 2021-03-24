@@ -47,7 +47,7 @@ const SignInTimePicker = (props) => {
         >
           <Text style={styles.typeInfo}>{props.type}</Text>
           <Text style={styles.dateTimeText}>
-            {dayjs(signInTime.getTime()).format("A hh:mm:ss")}
+            {dayjs(signInTime.getTime()).format("A hh:mm")}
           </Text>
         </TouchableOpacity>
       </View>

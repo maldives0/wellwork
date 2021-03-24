@@ -55,6 +55,7 @@ const styles = StyleSheet.create({
     borderRadius: 100,
   },
   info: {
+    marginTop: 30,
     alignItems: "flex-start",
   },
 });

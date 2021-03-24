@@ -52,7 +52,7 @@ const SignOutTimePicker = (props) => {
               !isSignOut
                 ? signOutTime.getTime() + 9 * 60 * 60 * 1000
                 : signOutTime.getTime()
-            ).format("A hh:mm:ss")}
+            ).format("A hh:mm")}
           </Text>
         </TouchableOpacity>
       </View>

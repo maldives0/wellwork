@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from "react";
 
-import { StyleSheet, SafeAreaView, View, Text } from "react-native";
+import { StyleSheet, SafeAreaView, View, Text, Platform } from "react-native";
 
 import axios from "axios";
 import useSWR, { mutate } from "swr";
@@ -22,12 +22,20 @@ import { BasicButton, CloseButtonCoord } from "@/Components/BasicStyles";
 import AntDesign from "react-native-vector-icons/AntDesign";
 const ChangeUserInfo = ({ navigation, route }) => {
   const [phone, onChangePhone, onResetPhone, setPhone] = useInput("");
-  const [selectedDept, setSelectedDept] = useState(null);
+  const [selectedDept, setSelectedDept] = useState("");
   const [selectedDate, setSelectedDate] = useState(new Date());
-
-  const onDeptValueChange = useCallback((item) => {
+  const [items, setItems] = useState([
+    { label: "CEO", value: "A" },
+    { label: "경영", value: "B" },
+    { label: "영업", value: "C" },
+    { label: "개발", value: "D" },
+    { label: "디자인", value: "E" },
+    { label: "마케팅", value: "F" },
+  ]);
+  let controller;
+  const onDeptValueChange = (item) => {
     setSelectedDept(item.value);
-  }, []);
+  };
   const onSubmit = async () => {
     try {
       console.log(phone, selectedDept, selectedDate.toString().substr(4, 12));
@@ -65,43 +73,40 @@ const ChangeUserInfo = ({ navigation, route }) => {
               </CloseButtonCoord>
             </Item>
           </View>
-          <View style={styles.inputLayout}>
+          <View
+            style={{
+              position: "relative",
+              zIndex: 10,
+              padding: 16,
+            }}
+          >
             <Label style={styles.label}>소속 부서</Label>
-            {Platform.OS === "ios" ? (
-              <Picker
-                mode="dropdown"
-                placeholder="소속 부서를 선택해주세요"
-                iosIcon={<AntDesign name="down" />}
-                placeholderStyle={{ color: "#2874F0" }}
-                note={false}
-                selectedValue={selectedDept}
-                onValueChange={onDeptValueChange}
-              >
-                <Picker.Item label="CEO" value="A" />
-                <Picker.Item label="경영" value="B" />
-                <Picker.Item label="영업" value="C" />
-                <Picker.Item label="개발" value="D" />
-                <Picker.Item label="디자인" value="E" />
-                <Picker.Item label="마케팅" value="F" />
-              </Picker>
-            ) : (
-              <DropDownPicker
-                placeholder="소속 부서를 선택해주세요"
-                items={[
-                  { label: "CEO", value: "A" },
-                  { label: "경엉", value: "B" },
-                  { label: "영업", value: "C" },
-                  { label: "개발", value: "D" },
-                  { label: "디자인", value: "E" },
-                  { label: "마케팅", value: "F" },
-                ]}
-                defaultValue={selectedDept}
-                DropDownPicker={onDeptValueChange}
-                itemStyle={{
-                  justifyContent: "flex-start",
-                }}
-              />
-            )}
+            <DropDownPicker
+              dropDownMaxHeight={200}
+              placeholder="소속 부서를 선택해주세요"
+              items={items}
+              defaultValue={selectedDept}
+              onChangeItem={(item) => setSelectedDept(item.value)}
+              activeLabelStyle={{ color: "yellowgreen" }}
+              containerStyle={{ height: 40 }}
+              labelStyle={{ fontSize: 14, textAlign: "left", color: "#000" }}
+              itemStyle={{
+                justifyContent: "flex-start",
+              }}
+              style={{
+                borderTopLeftRadius: 10,
+                borderTopRightRadius: 10,
+                borderBottomLeftRadius: 10,
+                borderBottomRightRadius: 10,
+              }}
+              dropDownStyle={{
+                borderBottomLeftRadius: 20,
+                borderBottomRightRadius: 20,
+              }}
+              childrenContainerStyle={{
+                paddingLeft: 30,
+              }}
+            />
           </View>
           <View style={styles.inputLayout}>
             <Label style={styles.label}>입사일</Label>

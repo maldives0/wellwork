@@ -14,7 +14,7 @@ const App = () => {
     fetcher
   );
 
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
     console.log("app:", userData);
